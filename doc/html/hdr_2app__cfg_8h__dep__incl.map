@@ -1,0 +1,5 @@
+<map id="hdr/app_cfg.h" name="hdr/app_cfg.h">
+<area shape="rect" id="node1" title="Application configuration settings conveniently located here." alt="" coords="71,5,172,32"/>
+<area shape="rect" id="node2" href="$azx__apn_8h.html" title="Automatically setting APN based on the ICCID of the SIM." alt="" coords="5,80,136,121"/>
+<area shape="rect" id="node3" href="$azx__connectivity_8h.html" title="Establish network and data connection synchronously and provide info." alt="" coords="54,169,189,211"/>
+</map>
