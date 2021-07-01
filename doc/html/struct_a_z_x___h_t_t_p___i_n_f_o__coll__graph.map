@@ -1,0 +1,7 @@
+<map id="AZX_HTTP_INFO" name="AZX_HTTP_INFO">
+<area shape="rect" id="node1" title="The HTTP operation structure." alt="" coords="267,109,397,136"/>
+<area shape="rect" id="node2" href="$struct_a_z_x___h_t_t_p___h_e_a_d_e_r.html" title="HTTP header structure." alt="" coords="5,5,160,32"/>
+<area shape="rect" id="node3" href="$struct_a_z_x___h_t_t_p___u_r_l.html" title="HTTP URL structure." alt="" coords="185,5,309,32"/>
+<area shape="rect" id="node4" href="$structazx__http_callback_options.html" title="The HTTP callback options structure." alt="" coords="333,5,501,32"/>
+<area shape="rect" id="node5" href="$struct_a_z_x___h_t_t_p___s_s_l.html" title="HTTP SSL structure." alt="" coords="525,5,648,32"/>
+</map>

@@ -1,0 +1,7 @@
+<map id="stage/azx/core/hdr/azx_buffer.h" name="stage/azx/core/hdr/azx_buffer.h">
+<area shape="rect" id="node1" title="Buffers data that can be retrieved later." alt="" coords="83,5,213,47"/>
+<area shape="rect" id="node2" href="$azx__ati_8h.html" title="Sending AT commands and handling URCs." alt="" coords="83,95,213,136"/>
+<area shape="rect" id="node3" href="$azx__adc_8h.html" title="Read from and write to a peripheral via ADC." alt="" coords="5,184,136,225"/>
+<area shape="rect" id="node4" href="$azx__apn_8h.html" title="Automatically setting APN based on the ICCID of the SIM." alt="" coords="160,184,291,225"/>
+<area shape="rect" id="node5" href="$azx__connectivity_8h.html" title="Establish network and data connection synchronously and provide info." alt="" coords="158,273,293,315"/>
+</map>

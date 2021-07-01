@@ -1,0 +1,23 @@
+# APN database version
+v2021-01-14
+# <9 ICCID digits>:<APN string>:<apn-username | empty>:<apn-password | empty>:<1 | 2 | empty>
+# You must have SIM inserted at startup, otherwise DEFAULT APN will be used
+897777777:sample:username:password:2
+894620460:NXT17.NET:::
+893572010:ip.primetel:::
+899100090:airtelgprs.com:::
+# ATT EOD: 89014104271047569766
+# Verizon VPP: 89148000004538439202
+# APNs:
+#     11583.mcs = AT&T EOD LTE
+#     m2minternet.apn = Rogers
+#     a201.2way.net = Vodafone
+#     J108.com.attz = AT&T Jasper
+#     telit.vzwentp = Verizon VPP
+8914800000:telit.vzwentp:::
+8901410427:11583.mcs:::
+89391042:web.omnitel.it:::
+8939883224:internet.wind.biz:::
+898823900:vf.emerson.com:::
+893324010:internet.swir:::
+894620080:NXT17.NET:::

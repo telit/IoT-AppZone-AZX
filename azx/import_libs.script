@@ -1,0 +1,175 @@
+#!/bin/bash
+
+# Script that helps with importing the libraries needed into a project simply
+# define a LIBS variable like below and source this script:
+#   LIBS="core/azx_ati core/azx_timer core/azx_utils core/azx_tasks"
+#   SRC="<path-to-libs>/${LIBS_FOLDER_NAME}"
+#   DEST="<path-to-project>"
+#   source "${SRC}/import_libs.script"
+#   copy_telit_libs "${SRC}" "${DEST}"
+# 
+# Note: Please make sure you don't place anything by yourself in the libs folder
+# of your project as this will be removed
+#
+# Note: The libraries will be copied as symbolic links
+#
+# The script will copy all the needed libraries and also update Makefile.in in
+# the root of the project if needed
+#
+# See README.html for more information
+
+if [ ! -n "$LIBS_FOLDER_NAME" ]
+then
+  LIBS_FOLDER_NAME="azx"
+fi
+
+_add_if_missing()
+{
+  local DEST="$1"
+  local TEXT="$2"
+  grep -q -s -F "${TEXT}" "${DEST}" || echo "${TEXT}" >> "${DEST}"
+}
+
+get_dependencies()
+{
+  local INFO_FILE="$1"
+  grep -F "@dependencies" ${INFO_FILE} | \
+    sed 's/^.*@dependencies \(.*\)/\1/' || echo ""
+}
+
+INSTALLED_LIBS=""
+
+is_installed()
+{
+  local NAME="$1"
+  for N in ${INSTALLED_LIBS}
+  do
+    if [ "$N" == "$NAME" ]
+    then
+      echo "y"
+    fi
+  done
+}
+
+install_lib()
+{
+  local LIBNAME="$1"
+  local NAME="${LIBNAME}"
+  local DEST_LIBS_NAME="$2"
+  
+  if [ -n "$(is_installed ${NAME})" ]
+  then
+    return
+  fi
+  echo "Installing ${NAME}"
+  local DEPENDS=""
+  if [[ "$NAME" == "core/"* ]]
+  then
+    NAME=$(echo "$NAME" | sed "s%core/%%g" )
+    if [ -e "${SRC}/core/hdr/${NAME}.h" ]
+    then
+      cp -fs "${SRC}/core/hdr/${NAME}.h" "${DEST}/${DEST_LIBS_NAME}/hdr/"
+      #add COPYING attribute file for a specific core lib, if existing
+      ATTRIB_FILE=COPYING-${NAME#"azx_"}
+      #echo "${ATTRIB_FILE}"
+      if [ -e "${SRC}/core/hdr/${ATTRIB_FILE}" ]
+      then
+        cp -fs "${SRC}/core/hdr/${ATTRIB_FILE}" "${DEST}/${DEST_LIBS_NAME}/hdr/"
+      fi
+      if [ -e "${SRC}/core/src/${NAME}.c" ]
+      then
+        cp -fs "${SRC}/core/src/${NAME}.c" "${DEST}/${DEST_LIBS_NAME}/src/"
+      fi
+      _add_if_missing "${DEST}/Makefile.in" "CPPFLAGS += -I ${DEST_LIBS_NAME}/hdr"
+      _add_if_missing "${DEST}/Makefile.in" "OBJS += \$(patsubst %.c,%.o,\$(wildcard ${DEST_LIBS_NAME}/src/*.c))"
+      DEPENDS=$(get_dependencies "${SRC}/core/hdr/${NAME}.h")
+
+    fi
+  fi
+  
+  if [[ "$NAME" == "libraries/"* ]]
+  then
+    NAME=$(echo "$NAME" | sed "s%libraries/%%g" )
+    if [ -d "${SRC}/libraries/${NAME}" ]
+    then
+      cp -fsr "${SRC}/libraries/${NAME}" "${DEST}/${DEST_LIBS_NAME}/"
+      _add_if_missing "${DEST}/Makefile.in" "CPPFLAGS += -I ${DEST_LIBS_NAME}/${NAME}"
+      _add_if_missing "${DEST}/Makefile.in" "OBJS += \$(patsubst %.c,%.o,\$(wildcard ${DEST_LIBS_NAME}/${NAME}/*.c))"
+      if [ -e "${SRC}/libraries/${NAME}/Makefile.in.in" ]
+      then
+        MAKEFILE_TMP=$(cat ${SRC}/libraries/${NAME}/Makefile.in.in | sed "s%BASE_LIB_PATH%${DEST_LIBS_NAME}/${NAME}%g")
+        _add_if_missing "${DEST}/Makefile.in" "${MAKEFILE_TMP}"
+        rm "${DEST}/${DEST_LIBS_NAME}/${NAME}/Makefile.in.in"
+      fi
+      DEPENDS=$(get_dependencies "${SRC}/libraries/${NAME}/readme")
+    fi
+  fi
+  INSTALLED_LIBS="${INSTALLED_LIBS} ${LIBNAME}"
+
+  for D in ${DEPENDS}
+  do
+    install_lib ${D} ${DEST_LIBS_NAME}
+  done
+}
+
+copy_telit_libs()
+{
+  local SRC="$1"
+  local DEST="$2"
+  local DEST_LIBS_NAME="azx"
+  
+  if [ -n "$3" ]
+  then
+    DEST_LIBS_NAME="$3"
+  fi
+  
+  
+  echo "Copying libraries from ${SRC} to ${DEST}/${DEST_LIBS_NAME}"
+
+  rm -rf "${DEST}/${DEST_LIBS_NAME}"
+  
+  if [ ! -z "$LIBS" ]
+  then 
+    mkdir -p "${DEST}/${DEST_LIBS_NAME}/src"
+    mkdir -p "${DEST}/${DEST_LIBS_NAME}/hdr"
+
+    for LIB in $LIBS
+    do
+      install_lib ${LIB} ${DEST_LIBS_NAME}
+    done
+  else
+    echo "No libraries to be installed"
+  fi
+  
+  
+  
+}
+
+
+copy_lib_header_to_stage()
+{
+  local SRC="$1"
+  local NAME="$2"
+  local DEST="$3"
+  
+  if [ $(echo ${NAME} | grep -c "core") -eq 1 ]
+  then
+    libname=$(cut -d "/" -f2- <<< "$NAME" )
+    if [ -e "${SRC}/core/hdr/${libname}.h" ]
+    then
+      cp -fs "${SRC}/core/hdr/${libname}.h" $DEST
+      echo "Copying header ${SRC}/core/hdr/${libname}.h to ${DEST}"
+    fi
+  elif [ $(echo ${NAME} | grep -c "libraries") -eq 1 ]
+  then
+    libname=$(cut -d "/" -f2- <<< "$NAME" )
+    if [ -d "${SRC}/libraries/${libname}" ]
+    then
+      echo "Copying headers from ${SRC}/libraries/${libname} to ${DEST}"
+      cp -fs ${SRC}/libraries/${libname}/azx_*.h ${DEST}/.
+    fi
+  else 
+    echo "cannot manage SRC <${SRC}>"
+  fi
+ 
+}

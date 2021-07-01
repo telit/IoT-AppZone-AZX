@@ -1,0 +1,10 @@
+<map id="stage/azx/core/hdr/azx_utils.h" name="stage/azx/core/hdr/azx_utils.h">
+<area shape="rect" id="node1" title="Various helpful utilities." alt="" coords="313,5,444,47"/>
+<area shape="rect" id="node2" href="$azx__ati_8h.html" title="Sending AT commands and handling URCs." alt="" coords="160,95,291,136"/>
+<area shape="rect" id="node5" href="$azx__connectivity_8h.html" title="Establish network and data connection synchronously and provide info." alt="" coords="261,273,395,315"/>
+<area shape="rect" id="node6" href="$azx__timer_8h.html" title="A better way to use timers." alt="" coords="365,184,496,225"/>
+<area shape="rect" id="node7" href="$azx__gpio_8h.html" title="Interact with the modem&#39;s GPIO pins." alt="" coords="416,95,547,136"/>
+<area shape="rect" id="node8" href="$azx__watchdog_8h.html" title="Software watchdog to detects stalling tasks." alt="" coords="571,95,701,136"/>
+<area shape="rect" id="node3" href="$azx__adc_8h.html" title="Read from and write to a peripheral via ADC." alt="" coords="5,184,136,225"/>
+<area shape="rect" id="node4" href="$azx__apn_8h.html" title="Automatically setting APN based on the ICCID of the SIM." alt="" coords="160,184,291,225"/>
+</map>

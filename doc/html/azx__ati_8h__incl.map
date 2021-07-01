@@ -1,0 +1,8 @@
+<map id="stage/azx/core/hdr/azx_ati.h" name="stage/azx/core/hdr/azx_ati.h">
+<area shape="rect" id="node1" title="Sending AT commands and handling URCs." alt="" coords="67,5,197,47"/>
+<area shape="rect" id="node2" title=" " alt="" coords="14,244,122,271"/>
+<area shape="rect" id="node3" href="$azx__log_8h.html" title="Logging utilities to print on available output channels." alt="" coords="157,169,235,196"/>
+<area shape="rect" id="node5" href="$azx__buffer_8h.html" title="Buffers data that can be retrieved later." alt="" coords="27,95,122,121"/>
+<area shape="rect" id="node6" href="$azx__utils_8h.html" title="Various helpful utilities." alt="" coords="147,95,232,121"/>
+<area shape="rect" id="node4" title=" " alt="" coords="146,244,251,271"/>
+</map>

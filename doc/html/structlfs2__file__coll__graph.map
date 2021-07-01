@@ -1,0 +1,8 @@
+<map id="lfs2_file" name="lfs2_file">
+<area shape="rect" id="node1" title=" " alt="" coords="210,184,277,211"/>
+<area shape="rect" id="node2" href="$structlfs2__ctz.html" title=" " alt="" coords="5,95,73,121"/>
+<area shape="rect" id="node3" href="$structlfs2__file__config.html" title=" " alt="" coords="98,95,207,121"/>
+<area shape="rect" id="node4" href="$structlfs2__attr.html" title=" " alt="" coords="118,5,187,32"/>
+<area shape="rect" id="node5" href="$structlfs2__cache.html" title="internal littlefs data structures ///" alt="" coords="231,95,317,121"/>
+<area shape="rect" id="node6" href="$structlfs2__mdir.html" title=" " alt="" coords="341,95,415,121"/>
+</map>

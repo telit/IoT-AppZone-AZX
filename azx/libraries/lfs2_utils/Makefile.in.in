@@ -1,0 +1,2 @@
+CPPFLAGS += -I BASE_LIB_PATH/mbed-littlefs/littlefs
+OBJS += $(patsubst %.c,%.o,$(wildcard BASE_LIB_PATH/mbed-littlefs/littlefs/*.c))

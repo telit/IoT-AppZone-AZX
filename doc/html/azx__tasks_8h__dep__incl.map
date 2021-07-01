@@ -1,0 +1,6 @@
+<map id="stage/azx/core/hdr/azx_tasks.h" name="stage/azx/core/hdr/azx_tasks.h">
+<area shape="rect" id="node1" title="Tasks related utilities." alt="" coords="85,5,215,47"/>
+<area shape="rect" id="node2" href="$azx__timer_8h.html" title="A better way to use timers." alt="" coords="7,95,138,136"/>
+<area shape="rect" id="node4" href="$azx__watchdog_8h.html" title="Software watchdog to detects stalling tasks." alt="" coords="162,95,293,136"/>
+<area shape="rect" id="node3" href="$azx__connectivity_8h.html" title="Establish network and data connection synchronously and provide info." alt="" coords="5,184,140,225"/>
+</map>
