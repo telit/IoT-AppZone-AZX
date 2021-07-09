@@ -114,7 +114,7 @@ In case you do not want to install extra scripts in your project you can still u
 perform the steps of the above scripts.  The process is simple but you need to make sure you include and compile all
 necessary files.
 
-Steps to manually at a library in your project:
+Steps to manually add a library in your project:
 
 1. Create a `libs` folder so you can place the files. This is optional since you can place them anywhere you want. The
 important is to link them correctly.
