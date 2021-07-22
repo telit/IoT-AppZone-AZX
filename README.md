@@ -3,8 +3,7 @@ IoT-AppZone-C AZX Libs
 
 ## Abstract
 
-This repository contains Telit IoT AppZone C utility libraries, built on top of the Telit M2MB API, which provide additional functionalities and 
-simplified access to on-board ones, allowing for easy creation of projects based on the Telit's modems.
+This repository contains Telit IoT AppZone C utility libraries, built on top of the Telit M2MB API, which provide additional functionalities and simplified access to on-board ones, allowing for easy creation of projects based on the Telit's modems.
 
 ---
 
@@ -50,13 +49,15 @@ If not explicitly stated in each subfolder LICENSE / Attribution files, the sour
 
 # Using the AZX libs
 
-To use any of the libraries, you can just use the `import_libs.script` which contains a function
-that deals with the copying of the libraries and updating of the _Makefile.in_ file.
+ - Create an empty project in the AppZone IDE.
+ - Right click on the project name -> Properties->Resource. Copy the Location of the newly created project, as it will be needed later.
+
+ - To use any of the libraries, just source the `import_libs.script` ( or `import_libs.ps1` for Windows machines without a bash shell) that is contained in the `azx` folder. The scripts provide a function which will manage the copy of the libraries and update of the _Makefile.in_ file of the target project. `Makefile.in` is expected to be present in the project root folder.
 
 If you wish to avoid using a script to manage this process automatically, check out the [Manually including
-Libraries](#manually-including-libraries) section. 
+Libraries](#manually-including-libraries) section.
 
-In order to use `import_libs.script` you need to do the following:
+In order to use `import_libs.script` you need to do the following in your own defined `get_libs.sh` script:
 
  - set the LIBS variable to be a list of libraries you want to use (like `LIBS="azx_ati azx_timer
    azx_utils azx_tasks"`)
@@ -64,17 +65,22 @@ In order to use `import_libs.script` you need to do the following:
  - call `copy_telit_libs` passing as arguments the location where the script is installed and the
    destination folder (where you project is)
 
-The function will copy all the specified libraries in the location and update the Makefile.in with
+The function will copy all the specified libraries in the location and update the Makefile.in file with the
 correct include paths and new source files. If any libraries have other dependencies, those
-dependencies will be handled automatically by the script.
+ will be handled automatically by the script.
 
-## Example Script
+_The same logic applies for `import_libs.ps1` with a custom `get_libs.ps1` script._
 
-_Please note that you might need to adjust the the variables in the script to reflect your project's directory or
-setup._ 
+**Below a few examples of a generic get_libs script for both Linux and Windows systems.**
+
+## Example Scripts
+
+_Please note that you might need to adjust the variables in the script to reflect your project's directory or
+setup._
 
 ### Linux / Windows with a bash shell
 
+Below an example of a bash script that, launched from the repository root, will install the required libraries. The script needs the destination path to be provided as an input parameter.
 
 __get_libs.sh__
 
@@ -84,29 +90,66 @@ __get_libs.sh__
 LIBS="core/azx_timer core/azx_log core/azx_tasks core/azx_utils core/azx_ati core/azx_string core/azx_i2c core/azx_gpio"
 
 LIBS_FOLDER_NAME="azx"
-DEST=`readlink -f $0 | xargs dirname`
-SRC="${AZX_LIBS}/${LIBS_FOLDER_NAME}"
+ROOT=`readlink -f $0 | xargs dirname` #current folder is the root for the libraries
+SRC="${ROOT}/${LIBS_FOLDER_NAME}"
+
+DEST=$1 #destination path is first script parameter
 
 source "${SRC}/import_libs.script"
+
+if [ ! -e ${DEST}/Makefile.in ]
+then
+  touch ${DEST}/Makefile.in
+fi
 copy_telit_libs "${SRC}" "${DEST}"
 ~~~
 
+*Usage*
+~~~bash
+$ get_libs.sh /path/to/target/project
+~~~
+
+Where `/path/to/target/project` is the target location retrieved from the AppZone IDE.
+
 ### Windows Powershell
+
+Below an example of PowerShell script that, launched from the repository root, will install the required libraries. The script needs the destination path to be provided as an input parameter.
 
 __get_libs.ps1__
 
 ~~~powershell
-$DEST = $PSScriptRoot
-$LIBS_FOLDER_NAME = "azx"
-$SRC  = Resolve-Path ${ROOT}\\${LIBS_FOLDER_NAME}
+$DEST = Resolve-Path $args[0]  #destination path is first script parameter
 
+$LIBS_FOLDER_NAME = "azx"
+
+$SRC  = "$PSScriptRoot\${LIBS_FOLDER_NAME}"
+
+#edit this variable according to required libs
 $script:LIBS = "core/azx_timer core/azx_log core/azx_tasks core/azx_utils core/azx_ati core/azx_string core/azx_i2c core/azx_gpio"
 
 . "${SRC}/import_libs.ps1"
 
+if (!(Test-Path "${DEST}\Makefile.in"))
+{
+   New-Item -path ${DEST} -name Makefile.in -type "file"
+}
 copy_telit_libs "${SRC}" "${DEST}"
-
 ~~~
+
+*Usage*
+~~~powershell
+$ get_libs.ps1 C:\path\to\target\project
+~~~
+
+Where `C:\path\to\target\project` is the target location retrieved from the AppZone IDE.
+
+
+
+
+
+-----
+**Note**: similar __get_libs.sh__ and __get_libs.ps1__ can be found inside the examples. Please refer the examples Readme.md for further details.
+
 
 ## Manually including Libraries
 
@@ -126,7 +169,7 @@ of all dependencies for each header file in the `@dependencies` tag.
 1. Modify your Makefile and add the right flags to include the folders you copied the libraries in the build and include
 path. For example:
     * to add new include paths: `CPPFLAGS += -I path/to/my_hdr`
-    * to compile source files from another location into your project: `OBJS += $(patsubst %.c,%.o,$(wildcard my_src/*.c))` 
+    * to compile source files from another location into your project: `OBJS += $(patsubst %.c,%.o,$(wildcard my_src/*.c))`
 
 ---
 
