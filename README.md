@@ -49,6 +49,8 @@ If not explicitly stated in each subfolder LICENSE / Attribution files, the sour
 
 # Using the AZX libs
 
+If you haven't done yet, please download and install [IoT AppZone IDE v5](https://bit.ly/3F19Aep).
+
  - Create an empty project in the AppZone IDE.
  - Right click on the project name -> Properties->Resource. Copy the Location of the newly created project, as it will be needed later.
 
