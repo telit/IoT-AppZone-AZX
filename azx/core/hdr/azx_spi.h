@@ -5,7 +5,7 @@
 #define UUID_e01abdf5_7211_47ab_b352_b54871ecb956
 /**
  * @file azx_spi.h
- * @version 1.0.1
+ * @version 1.0.2
  * @dependencies core/azx_log
  * @author Ioannis Demetriou
  * @author Sorin Basca

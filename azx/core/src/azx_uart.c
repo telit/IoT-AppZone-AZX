@@ -173,6 +173,5 @@ void azx_uart_close(UINT16 device_id)
     m2mb_uart_close(data->fd);
     memset(data, 0, sizeof(UartData));
     data->fd = INVALID_UART_FD;
-    data->used = FALSE;
   }
 }

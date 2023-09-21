@@ -1,5 +1,4 @@
-
-IoT-AppZone-C AZX Libs
+# IoT-AppZone-C AZX Libs
 
 ## Abstract
 
@@ -14,30 +13,31 @@ Here is a list of included libraries:
 Library | Version | Description
 -------------------- | ------- | --------------------------------------------------
 `core/azx_adc` | `v1.0.2` | Read from and write to a peripheral via ADC
-`core/azx_apn` | `v1.0.2` | Automatically setting APN based on the ICCID of the SIM
-`core/azx_ati` | `v1.0.2` | Sending AT commands and handling URCs
-`core/azx_base64` | `v1.1.0` | Base64 utilities
+`core/azx_apn` | `v1.0.3` | Automatically setting APN based on the ICCID of the SIM
+`core/azx_ati` | `v1.0.5` | Sending AT commands and handling URCs
+`core/azx_base64` | `v1.1.2` | Base64 utilities
 `core/azx_buffer` | `v1.0.1` | Buffers data that can be retrieved later
 `core/azx_connectivity` | `v1.0.2` | Establish network and data connection synchronously and provide info
-`core/azx_gpio` | `v1.0.2` | Interact with the modem's GPIO pins
+`core/azx_gpio` | `v1.0.3` | Interact with the modem's GPIO pins
 `core/azx_i2c` | `v1.0.1` | Communicate with peripherals over the I2C bus
-`core/azx_log` | `v1.0.8` | Logging utilities to print on available output channels
-`core/azx_spi` | `v1.0.1` | Communicate with peripherals connected via the SPI bus
-`core/azx_string` | `v1.0.2` | String manipulation library
-`core/azx_string_utils` | `v1.0.1` | String related utilities
-`core/azx_tasks` | `v1.0.4` | Tasks related utilities
-`core/azx_timer` | `v1.0.2` | A better way to use timers
-`core/azx_uart` | `v1.0.1` | Communicate with devices via UART
-`core/azx_utils` | `v1.0.2` | Various helpful utilities
+`core/azx_log` | `v1.1.0` | Logging utilities to print on available output channels
+`core/azx_spi` | `v1.0.2` | Communicate with peripherals connected via the SPI bus
+`core/azx_string` | `v1.0.3` | String manipulation library
+`core/azx_string_utils` | `v1.0.2` | String related utilities
+`core/azx_tasks` | `v1.1.1` | Tasks related utilities
+`core/azx_timer` | `v1.0.4` | A better way to use timers
+`core/azx_uart` | `v1.0.2` | Communicate with devices via UART
+`core/azx_utils` | `v1.0.3` | Various helpful utilities
 `core/azx_watchdog` | `v1.0.1` | Software watchdog to detects stalling tasks
 `libraries/cjson` | `v1.0.1` | Porting of cJSON library
-`libraries/easy_at` | `v1.0.1` | Utility code to simplify at parser usage (custom at commands)
-`libraries/eeprom_24XX256` | `v1.0.1` | Library to provide 24XX256 EEPROM communication
-`libraries/ftp` | `v1.0.0` | ftp client porting in azx style
-`libraries/gnu` | `v0.0.2` | gnu abstraction layer utility in azx style
-`libraries/https` | `v1.0.1` | Library to provide HTTPS client functionalities
+`libraries/easy_at` | `v1.0.2` | Utility code to simplify at parser usage (custom at commands)
+`libraries/eeprom_24XX256` | `v1.0.3` | Library to provide 24XX256 EEPROM communication
+`libraries/ftp` | `v1.1.0` | ftp client porting in azx style
+`libraries/gnu` | `v0.0.3` | gnu abstraction layer utility in azx style
+`libraries/https` | `v1.0.3` | Library to provide HTTPS client functionalities
 `libraries/lfs2_utils` | `v1.0.1` | Utility code to use the implementation of LFS2 wih Ram Disk and SPI Flash memories
-`libraries/pdu_codec` | `v1.0.0` | Utility code to simplify parse/encode binary PDU to be used with `m2mb_sms_*` APIs
+`libraries/pdu_codec` | `v1.0.3` | Utility code to simplify parse/encode binary PDU to be used with `m2mb_sms_*` APIs
+`libraries/smtp` | `v1.0.0` | smtp client implementation
 `libraries/spi_flash` | `v1.0.1` | Driver code to interface JSC SPI data flash memories
 `libraries/zlib` | `v0.0.2` | zlib abstraction layer utility in azx style
 
@@ -84,7 +84,7 @@ Below an example of a bash script that, launched from the repository root, will 
 
 __get_libs.sh__
 
-~~~bash
+```bash
 #!/bin/bash
 
 LIBS="core/azx_timer core/azx_log core/azx_tasks core/azx_utils core/azx_ati core/azx_string core/azx_i2c core/azx_gpio"
@@ -102,12 +102,12 @@ then
   touch ${DEST}/Makefile.in
 fi
 copy_telit_libs "${SRC}" "${DEST}"
-~~~
+```
 
 *Usage*
-~~~bash
+```bash
 $ get_libs.sh /path/to/target/project
-~~~
+```
 
 Where `/path/to/target/project` is the target location retrieved from the AppZone IDE.
 
@@ -117,7 +117,7 @@ Below an example of PowerShell script that, launched from the repository root, w
 
 __get_libs.ps1__
 
-~~~powershell
+```powershell
 $DEST = Resolve-Path $args[0]  #destination path is first script parameter
 
 $LIBS_FOLDER_NAME = "azx"
@@ -134,12 +134,12 @@ if (!(Test-Path "${DEST}\Makefile.in"))
    New-Item -path ${DEST} -name Makefile.in -type "file"
 }
 copy_telit_libs "${SRC}" "${DEST}"
-~~~
+```
 
 *Usage*
-~~~powershell
+```powershell
 $ get_libs.ps1 C:\path\to\target\project
-~~~
+```
 
 Where `C:\path\to\target\project` is the target location retrieved from the AppZone IDE.
 

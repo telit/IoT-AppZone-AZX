@@ -1,8 +1,7 @@
 <map id="stage/azx/core/hdr/azx_gpio.h" name="stage/azx/core/hdr/azx_gpio.h">
-<area shape="rect" id="node1" title="Interact with the modem&#39;s GPIO pins." alt="" coords="70,5,200,47"/>
-<area shape="rect" id="node2" title=" " alt="" coords="76,244,184,271"/>
-<area shape="rect" id="node3" title=" " alt="" coords="26,95,126,121"/>
-<area shape="rect" id="node4" href="$azx__log_8h.html" title="Logging utilities to print on available output channels." alt="" coords="194,169,273,196"/>
-<area shape="rect" id="node6" href="$azx__utils_8h.html" title="Various helpful utilities." alt="" coords="151,95,236,121"/>
-<area shape="rect" id="node5" title=" " alt="" coords="208,244,313,271"/>
+<area shape="rect" id="node1" title="Interact with the modem&#39;s GPIO pins." alt="" coords="50,5,181,47"/>
+<area shape="rect" id="node2" title=" " alt="" coords="106,244,214,271"/>
+<area shape="rect" id="node3" title=" " alt="" coords="22,95,122,121"/>
+<area shape="rect" id="node4" href="$azx__log_8h.html" title="Logging utilities to print on available output channels." alt="" coords="120,169,199,196"/>
+<area shape="rect" id="node5" href="$azx__utils_8h.html" title="Various helpful utilities." alt="" coords="197,95,282,121"/>
 </map>

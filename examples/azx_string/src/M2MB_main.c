@@ -25,9 +25,9 @@ void M2MB_main( int argc, char **argv )
 
   {
     CHAR at_rsp[] = "+COPS: 0,0,\"Vodafone\",8";
-    INT8 mode = 0xFF;
+    INT8 mode = 0x7F;
     CHAR  operator_name[32] = {0};
-    INT8 act = 0xFF;
+    INT8 act = 0x7F;
 
     const CHAR* cops_fmt = "%*[^+]+COPS: %d,%*[^,],\"%32[^\"]\",%d";
 

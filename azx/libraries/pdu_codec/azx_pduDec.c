@@ -28,7 +28,7 @@
 
 #include "m2mb_types.h"
 
-#include "ul_gsm_pdu.h"
+
 #include "azx_pduDec.h"
 
 /* Local defines ================================================================================*/
@@ -67,7 +67,9 @@ INT32 azx_pdu_decode(UINT8 *pdu, UINT32 pdu_len, pdu_struct *packet, CHAR *numbe
       packet);
 
   // check type SMS
-  if(packet->sender.type == PDU_TYPE_INTERNATIONAL)
+  if( (packet->sender.type == PDU_TYPE_INTERNATIONAL) ||
+      (packet->sender.type == PDU_TYPE_NATIONAL) ||
+      (packet->sender.type == PDU_TYPE_UNKNOWN) )
   {
     pdu_phone_unpack(&(packet->sender.data[0]),
         packet->sender.bytes,
@@ -87,9 +89,10 @@ INT32 azx_pdu_decode(UINT8 *pdu, UINT32 pdu_len, pdu_struct *packet, CHAR *numbe
 
   
   //fill result buffer
+  /*Now dcs has been correctly decoded, including 8 bit case*/
   pdu_in_decode_text(packet->msg.data,
       packet->msg.len,
-      (packet->tp_dcs == 0x00 ? PDU_DCS_7:PDU_DCS_UCS2),
+      (packet->tp_dcs),
       (UINT8*)msg);
 
   len_msg = packet->msg.len;

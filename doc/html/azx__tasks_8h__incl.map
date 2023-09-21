@@ -1,7 +1,6 @@
 <map id="stage/azx/core/hdr/azx_tasks.h" name="stage/azx/core/hdr/azx_tasks.h">
-<area shape="rect" id="node1" title="Tasks related utilities." alt="" coords="46,5,177,47"/>
-<area shape="rect" id="node2" title=" " alt="" coords="5,169,113,196"/>
-<area shape="rect" id="node3" title=" " alt="" coords="54,95,169,121"/>
-<area shape="rect" id="node4" href="$azx__log_8h.html" title="Logging utilities to print on available output channels." alt="" coords="193,95,272,121"/>
-<area shape="rect" id="node5" title=" " alt="" coords="180,169,285,196"/>
+<area shape="rect" id="node1" title="Tasks related utilities." alt="" coords="14,5,144,47"/>
+<area shape="rect" id="node2" title=" " alt="" coords="38,169,146,196"/>
+<area shape="rect" id="node3" title=" " alt="" coords="22,95,136,121"/>
+<area shape="rect" id="node4" href="$azx__log_8h.html" title="Logging utilities to print on available output channels." alt="" coords="161,95,240,121"/>
 </map>

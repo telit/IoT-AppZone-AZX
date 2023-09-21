@@ -1,5 +1,6 @@
 var hierarchy =
 [
+    [ "addrinfo", "structaddrinfo.html", null ],
     [ "ApnInfo", "struct_apn_info.html", null ],
     [ "AZX_CJSON_TAG", "struct_a_z_x___c_j_s_o_n___t_a_g.html", null ],
     [ "AZX_CONNECTIVITY_INFO_T", "struct_a_z_x___c_o_n_n_e_c_t_i_v_i_t_y___i_n_f_o___t.html", null ],
@@ -40,6 +41,7 @@ var hierarchy =
     [ "AzxBinaryData", "struct_azx_binary_data.html", null ],
     [ "code", "structcode.html", null ],
     [ "ct_data_s", "structct__data__s.html", null ],
+    [ "dcs_struct", "structdcs__struct.html", null ],
     [ "EASY_AT_HANDLES_TAG", "struct_e_a_s_y___a_t___h_a_n_d_l_e_s___t_a_g.html", null ],
     [ "EASY_AT_MODULE_TAG", "struct_e_a_s_y___a_t___m_o_d_u_l_e___t_a_g.html", null ],
     [ "EEPROM_I2C_T", "struct_e_e_p_r_o_m___i2_c___t.html", null ],

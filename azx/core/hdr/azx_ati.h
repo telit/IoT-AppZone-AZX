@@ -5,7 +5,7 @@
 #define UUID_713c3323_6a68_43dd_80ac_e7dddf0013e8
 /**
  * @file azx_ati.h
- * @version 1.0.2
+ * @version 1.0.5
  * @dependencies core/azx_buffer core/azx_log core/azx_utils
  * @author Sorin Basca
  * @date 10/02/2019
@@ -259,7 +259,7 @@ void azx_ati_disable_log_for_cmd(const CHAR* prefix);
  *
  * This disables the logs for all instances.
  */
-void azx_ati_disable_logs();
+void azx_ati_disable_logs(void);
 
 /**
  * @brief Deinitializes an AT instance.

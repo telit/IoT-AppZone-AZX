@@ -36,7 +36,7 @@ static Timer* get_timer(AZX_TIMER_ID id);
 
 static INT32 timer_task(INT32 unused_type, INT32 timer_id, INT32 unused_param);
 static BOOLEAN create_internal_task_if_needed(void);
-static BOOLEAN destroy_internal_task_if_not_needed();
+static BOOLEAN destroy_internal_task_if_not_needed(void);
 
 static void do_start(Timer* tim, UINT32 duration_ms, BOOLEAN restart);
 static void do_stop(Timer* tim);
@@ -46,7 +46,7 @@ static UINT32 time_now(void);
 
 static Timer* get_next_available(void)
 {
-  UINT32 i = 0;
+  UINT32 i;
   for(i = 0; i < MAX_TIMERS; ++i)
   {
     if(allTimers[i].id == NO_AZX_TIMER_ID)
@@ -60,7 +60,7 @@ static Timer* get_next_available(void)
 
 static BOOLEAN are_timers_unused(void)
 {
-  UINT32 i = 0;
+  UINT32 i;
   for(i = 0; i < MAX_TIMERS; ++i)
   {
     if(allTimers[i].id != NO_AZX_TIMER_ID)
@@ -293,7 +293,7 @@ static BOOLEAN create_internal_task_if_needed(void)
   return FALSE;
 }
 
-static BOOLEAN destroy_internal_task_if_not_needed()
+static BOOLEAN destroy_internal_task_if_not_needed(void)
 {
   BOOLEAN res = FALSE;
   if (0 < timerTaskId)
@@ -316,10 +316,8 @@ static BOOLEAN destroy_internal_task_if_not_needed()
   }
   else
   {
-    res = FALSE;
+    /*do nothing*/
   }
-
-
   return res;
 }
 

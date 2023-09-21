@@ -39,6 +39,10 @@ static BOOLEAN is_sim_inserted(void)
   const CHAR* response = azx_ati_sendCommand(AZX_ATI_DEFAULT_TIMEOUT, "AT+CPIN?");
   const CHAR* ready = "READY";
   CHAR *pResult;
+  if(!response)
+  {
+    return FALSE;
+  }
   pResult = strstr(response, ready);
 
   if (!pResult)

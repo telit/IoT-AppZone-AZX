@@ -1,14 +1,13 @@
 var searchData=
 [
-  ['usage_20of_20logging_20functionalities_759',['Usage of logging functionalities',['../group__log_usage.html',1,'']]],
-  ['usage_20of_20pdu_20decoding_20functionalities_760',['Usage of pdu decoding functionalities',['../group__pdu_dec_usage.html',1,'']]],
-  ['usage_20of_20pdu_20encoding_20functionalities_761',['Usage of pdu encoding functionalities',['../group__pdu_enc_usage.html',1,'']]],
-  ['usage_20of_20tasks_20example_20functionalities_762',['Usage of tasks example functionalities',['../group__task_usage.html',1,'']]],
-  ['ul_5fgsm_5fpdu_2eh_763',['ul_gsm_pdu.h',['../ul__gsm__pdu_8h.html',1,'']]],
-  ['unmount_764',['unmount',['../classmbed_1_1_little_file_system2.html#acf08ff0d6015077ac47f2cf487dc4b51',1,'mbed::LittleFileSystem2']]],
-  ['user_5fagent_765',['user_agent',['../struct_a_z_x___h_t_t_p___h_e_a_d_e_r.html#a59825a2326d7fc12991da432fbe20098',1,'AZX_HTTP_HEADER']]],
-  ['user_5fbase64_5fencode_766',['user_base64_encode',['../group__http_conf.html#ga3cb8375a9c231c36d41bcc6390f26890',1,'azx_https.h']]],
-  ['user_5fcb_5fbytes_5fsize_767',['user_cb_bytes_size',['../structazx__http_callback_options.html#ae999de10c7ec41abc95949d9e3b90102',1,'azx_httpCallbackOptions']]],
-  ['user_5ftask_5fcb_768',['USER_TASK_CB',['../group__task_usage.html#gaf5abdb36b530c6d64d58a14555a68416',1,'azx_tasks.h']]],
-  ['username_769',['username',['../struct_apn_info.html#a48e24ca89531c7cf379878d9567a6973',1,'ApnInfo']]]
+  ['usage_20of_20logging_20functionalities_837',['Usage of logging functionalities',['../group__log_usage.html',1,'']]],
+  ['usage_20of_20pdu_20decoding_20functionalities_838',['Usage of pdu decoding functionalities',['../group__pdu_dec_usage.html',1,'']]],
+  ['usage_20of_20pdu_20encoding_20functionalities_839',['Usage of pdu encoding functionalities',['../group__pdu_enc_usage.html',1,'']]],
+  ['usage_20of_20tasks_20example_20functionalities_840',['Usage of tasks example functionalities',['../group__task_usage.html',1,'']]],
+  ['unmount_841',['unmount',['../classmbed_1_1_little_file_system2.html#acf08ff0d6015077ac47f2cf487dc4b51',1,'mbed::LittleFileSystem2']]],
+  ['user_5fagent_842',['user_agent',['../struct_a_z_x___h_t_t_p___h_e_a_d_e_r.html#a59825a2326d7fc12991da432fbe20098',1,'AZX_HTTP_HEADER']]],
+  ['user_5fbase64_5fencode_843',['user_base64_encode',['../group__http_conf.html#ga3cb8375a9c231c36d41bcc6390f26890',1,'azx_https.h']]],
+  ['user_5fcb_5fbytes_5fsize_844',['user_cb_bytes_size',['../structazx__http_callback_options.html#ae999de10c7ec41abc95949d9e3b90102',1,'azx_httpCallbackOptions']]],
+  ['user_5ftask_5fcb_845',['USER_TASK_CB',['../group__task_usage.html#gaf5abdb36b530c6d64d58a14555a68416',1,'azx_tasks.h']]],
+  ['username_846',['username',['../struct_apn_info.html#a48e24ca89531c7cf379878d9567a6973',1,'ApnInfo']]]
 ];

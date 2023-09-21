@@ -79,7 +79,6 @@ void LFS2_logFormatted(LFS2_LOG_HOOK_LEVELS_E level,
 		);
 		break;
 	case LFS2_LOG_LEVEL_INFO:
-		offset = 0;
 		break;
 	case LFS2_LOG_LEVEL_DEBUG:
 		offset = sprintf(buf, "%s %u.%03u %8s:%d - %8s: ",
@@ -92,15 +91,13 @@ void LFS2_logFormatted(LFS2_LOG_HOOK_LEVELS_E level,
 
 		break;
 	default:
-		offset = 0;
 		break;
 	}
 	va_start(arg, fmt);
 	vsnprintf(buf + offset, bufSize-offset, fmt, arg);
 	va_end(arg);
 
-	AZX_LOG_INFO(buf);  //This is a generic function, like printf
-	AZX_LOG_INFO("\r\n");  //This is a generic function, like printf
+	AZX_LOG_INFO("%s\r\n", buf);  //This is a generic function, like printf
 
 }
 /***************** SPI_FLASH_logFormatted ***********************************************/

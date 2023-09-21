@@ -302,10 +302,37 @@ UINT8 azx_gpio_get(UINT8 gpio)
 
 BOOLEAN azx_gpio_sendPulse(UINT8 gpio, UINT32 period, UINT32 no_of_waves)
 {
-  const UINT8 initialValue = AZX_GPIO_HIGH; // TODO: Read existing value
-  UINT8 val = !initialValue;
-  GpioInfo* info = do_gpio_conf(gpio, M2MB_GPIO_MODE_OUTPUT, M2MB_GPIO_PULL_KEEPER);
+
+  /*Open in input to read initial value*/
+  GpioInfo* info = do_gpio_conf(gpio, M2MB_GPIO_MODE_INPUT, M2MB_GPIO_PULL_KEEPER);
   UINT32 i = 0;
+  M2MB_GPIO_VALUE_E initialValue;
+  UINT8 val;
+
+  if(!info)
+  {
+    return FALSE;
+  }
+
+  if ( -1 == m2mb_gpio_read( info->fd, &initialValue) )
+  {
+    AZX_LOG_ERROR("Failed to read GPIO %u\r\n", gpio);
+    return FALSE;
+  }
+  else
+  {
+    AZX_LOG_TRACE("Initial value: %d\r\n", initialValue);
+  }
+
+  val = !initialValue;
+
+  /*now open in output mode*/
+  info = do_gpio_conf(gpio, M2MB_GPIO_MODE_OUTPUT, M2MB_GPIO_PULL_KEEPER);
+  if(!info)
+  {
+    return FALSE;
+  }
+
 
   AZX_LOG_TRACE("Start pulse\r\n");
 

@@ -1,16 +1,15 @@
 <map id="stage/azx/core/hdr/azx_connectivity.h" name="stage/azx/core/hdr/azx_connectivity.h">
-<area shape="rect" id="node1" title="Establish network and data connection synchronously and provide info." alt="" coords="608,5,743,47"/>
-<area shape="rect" id="node2" title=" " alt="" coords="453,393,561,420"/>
-<area shape="rect" id="node3" title=" " alt="" coords="841,95,936,121"/>
-<area shape="rect" id="node4" title=" " alt="" coords="636,169,715,196"/>
-<area shape="rect" id="node5" href="$azx__log_8h.html" title="Logging utilities to print on available output channels." alt="" coords="299,319,377,345"/>
-<area shape="rect" id="node7" href="$azx__utils_8h.html" title="Various helpful utilities." alt="" coords="579,244,665,271"/>
-<area shape="rect" id="node8" href="$azx__timer_8h.html" title="A better way to use timers." alt="" coords="190,169,281,196"/>
-<area shape="rect" id="node11" href="$azx__apn_8h.html" title="Automatically setting APN based on the ICCID of the SIM." alt="" coords="518,95,601,121"/>
-<area shape="rect" id="node6" title=" " alt="" coords="285,393,391,420"/>
-<area shape="rect" id="node9" href="$azx__tasks_8h.html" title="Tasks related utilities." alt="" coords="22,244,115,271"/>
-<area shape="rect" id="node10" title=" " alt="" coords="106,319,221,345"/>
-<area shape="rect" id="node12" href="$azx__string_8h.html" title="String manipulation library." alt="" coords="291,244,385,271"/>
-<area shape="rect" id="node13" href="$azx__ati_8h.html" title="Sending AT commands and handling URCs." alt="" coords="486,169,561,196"/>
-<area shape="rect" id="node14" href="$azx__buffer_8h.html" title="Buffers data that can be retrieved later." alt="" coords="460,244,555,271"/>
+<area shape="rect" id="node1" title="Establish network and data connection synchronously and provide info." alt="" coords="531,5,666,47"/>
+<area shape="rect" id="node2" title=" " alt="" coords="446,393,554,420"/>
+<area shape="rect" id="node3" title=" " alt="" coords="842,95,937,121"/>
+<area shape="rect" id="node4" title=" " alt="" coords="687,169,766,196"/>
+<area shape="rect" id="node5" href="$azx__log_8h.html" title="Logging utilities to print on available output channels." alt="" coords="339,319,418,345"/>
+<area shape="rect" id="node6" href="$azx__utils_8h.html" title="Various helpful utilities." alt="" coords="23,244,108,271"/>
+<area shape="rect" id="node7" href="$azx__timer_8h.html" title="A better way to use timers." alt="" coords="133,169,224,196"/>
+<area shape="rect" id="node10" href="$azx__apn_8h.html" title="Automatically setting APN based on the ICCID of the SIM." alt="" coords="557,95,640,121"/>
+<area shape="rect" id="node8" href="$azx__tasks_8h.html" title="Tasks related utilities." alt="" coords="132,244,225,271"/>
+<area shape="rect" id="node9" title=" " alt="" coords="200,319,315,345"/>
+<area shape="rect" id="node11" href="$azx__string_8h.html" title="String manipulation library." alt="" coords="572,244,665,271"/>
+<area shape="rect" id="node12" href="$azx__ati_8h.html" title="Sending AT commands and handling URCs." alt="" coords="463,169,537,196"/>
+<area shape="rect" id="node13" href="$azx__buffer_8h.html" title="Buffers data that can be retrieved later." alt="" coords="453,244,547,271"/>
 </map>

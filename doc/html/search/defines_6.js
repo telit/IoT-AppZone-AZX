@@ -1,5 +1,4 @@
 var searchData=
 [
-  ['sockaddr_1428',['sockaddr',['../azx__gnu__sys__socket_8h.html#af5850e749a61de4774245a6d599920b4',1,'azx_gnu_sys_socket.h']]],
-  ['socket_1429',['socket',['../azx__gnu__sys__socket_8h.html#aa8318fbee111c5bde5952c63e894c962',1,'azx_gnu_sys_socket.h']]]
+  ['no_5fazx_5ftimer_5fid_1573',['NO_AZX_TIMER_ID',['../azx__timer_8h.html#af8dd1366ab820f30b4e964344ba4eac1',1,'azx_timer.h']]]
 ];

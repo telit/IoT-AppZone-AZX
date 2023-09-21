@@ -12,7 +12,7 @@ var azx__ati_8h =
     [ "azx_ati_addUrcHandlerEx", "azx__ati_8h.html#ae17330a90321fb428a2cadf623782521", null ],
     [ "azx_ati_deinitEx", "azx__ati_8h.html#a6d72794fd52d7cc0830d420e6cdb48be", null ],
     [ "azx_ati_disable_log_for_cmd", "azx__ati_8h.html#a8bc3c89a08fc64c8156c360113acf025", null ],
-    [ "azx_ati_disable_logs", "azx__ati_8h.html#a9e5a33e4da18d9b57e03b240eac715a6", null ],
+    [ "azx_ati_disable_logs", "azx__ati_8h.html#a51c6e489f7ae21d97e62ed14306825f9", null ],
     [ "azx_ati_sendCommandAndLogEx", "azx__ati_8h.html#a774fb48c0c8f5e92d95be260f1503381", null ],
     [ "azx_ati_sendCommandBinaryEx", "azx__ati_8h.html#af7ac8d4e6789e14029766214ecd21bbf", null ],
     [ "azx_ati_sendCommandEx", "azx__ati_8h.html#a84ed3e34bddb591a404dc7ab5b89702d", null ],

@@ -10,7 +10,7 @@
   @details
 
   @version
-  	  1.0.0
+  	  1.0.1
 
   @note
 
@@ -285,10 +285,7 @@ LFS2_ERROR_T azx_lfsMountByContext (AZX_LFSMOUNT_MODE_E mode,
 			return LFS2_ERR_GENERIC;
 		}
 		break;
-	}
-	default:
-		AZX_LOG_ERROR("Mode not valid!!\r\n");
-		return LFS2_ERR_GENERIC;
+	}	
 	}
 	AZX_LOG_INFO("\n\rMounted partition...\r\n");
 

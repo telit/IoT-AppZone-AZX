@@ -3,6 +3,7 @@ var annotated_dup =
     [ "mbed", null, [
       [ "LittleFileSystem2", "classmbed_1_1_little_file_system2.html", "classmbed_1_1_little_file_system2" ]
     ] ],
+    [ "addrinfo", "structaddrinfo.html", "structaddrinfo" ],
     [ "ApnInfo", "struct_apn_info.html", "struct_apn_info" ],
     [ "AZX_CJSON_TAG", "struct_a_z_x___c_j_s_o_n___t_a_g.html", "struct_a_z_x___c_j_s_o_n___t_a_g" ],
     [ "AZX_CONNECTIVITY_INFO_T", "struct_a_z_x___c_o_n_n_e_c_t_i_v_i_t_y___i_n_f_o___t.html", "struct_a_z_x___c_o_n_n_e_c_t_i_v_i_t_y___i_n_f_o___t" ],
@@ -43,6 +44,7 @@ var annotated_dup =
     [ "AzxBinaryData", "struct_azx_binary_data.html", "struct_azx_binary_data" ],
     [ "code", "structcode.html", "structcode" ],
     [ "ct_data_s", "structct__data__s.html", "structct__data__s" ],
+    [ "dcs_struct", "structdcs__struct.html", "structdcs__struct" ],
     [ "EASY_AT_HANDLES_TAG", "struct_e_a_s_y___a_t___h_a_n_d_l_e_s___t_a_g.html", null ],
     [ "EASY_AT_MODULE_TAG", "struct_e_a_s_y___a_t___m_o_d_u_l_e___t_a_g.html", null ],
     [ "EEPROM_I2C_T", "struct_e_e_p_r_o_m___i2_c___t.html", "struct_e_e_p_r_o_m___i2_c___t" ],

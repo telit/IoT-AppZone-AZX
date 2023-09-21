@@ -1,6 +1,8 @@
 <map id="stage/azx/libraries/gnu/azx_gnu_unistd.h" name="stage/azx/libraries/gnu/azx_gnu_unistd.h">
-<area shape="rect" id="node1" title="gnu definition" alt="" coords="75,5,228,47"/>
+<area shape="rect" id="node1" title="gnu definition" alt="" coords="191,5,344,47"/>
 <area shape="rect" id="node2" title=" " alt="" coords="5,95,73,121"/>
-<area shape="rect" id="node3" title=" " alt="" coords="97,95,205,121"/>
-<area shape="rect" id="node4" title=" " alt="" coords="230,95,355,121"/>
+<area shape="rect" id="node3" title=" " alt="" coords="98,95,189,121"/>
+<area shape="rect" id="node4" title=" " alt="" coords="213,95,321,121"/>
+<area shape="rect" id="node5" title=" " alt="" coords="346,95,461,121"/>
+<area shape="rect" id="node6" title=" " alt="" coords="485,95,610,121"/>
 </map>

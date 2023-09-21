@@ -166,7 +166,7 @@ copy_lib_header_to_stage()
     if [ -d "${SRC}/libraries/${libname}" ]
     then
       echo "Copying headers from ${SRC}/libraries/${libname} to ${DEST}"
-      cp -fs ${SRC}/libraries/${libname}/azx_*.h ${DEST}/.
+      for f in $(find "${SRC}/libraries/${libname}" -type f -name azx_*.h);do cp -fs $f ${DEST}/.; done;
     fi
   else 
     echo "cannot manage SRC <${SRC}>"

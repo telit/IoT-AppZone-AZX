@@ -21,7 +21,7 @@ static INT32 nextMessageIndex = 0;
 
 M2MB_OS_MTX_HANDLE mtxHnd = M2MB_OS_MTX_INVALID;
 
-static void lock()
+static void lock(void)
 {
   M2MB_OS_RESULT_E osRes;
   if(!mtxHnd)
@@ -52,7 +52,7 @@ static void lock()
   }
 }
 
-static void unlock()
+static void unlock(void)
 {
   if(!mtxHnd)
   {

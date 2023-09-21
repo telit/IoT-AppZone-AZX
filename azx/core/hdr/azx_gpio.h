@@ -5,7 +5,7 @@
 #define UUID_72d2f54f_61cb_4404_b2f3_4553b5b5b03d
 /**
  * @file azx_gpio.h
- * @version 1.0.2
+ * @version 1.0.3
  * @dependencies core/azx_log core/azx_utils core/azx_timer
  * @author Ioannis Demetriou
  * @author Sorin Basca

@@ -1,10 +1,9 @@
 <map id="stage/azx/core/hdr/azx_adc.h" name="stage/azx/core/hdr/azx_adc.h">
-<area shape="rect" id="node1" title="Read from and write to a peripheral via ADC." alt="" coords="317,5,447,47"/>
-<area shape="rect" id="node2" title=" " alt="" coords="244,319,352,345"/>
-<area shape="rect" id="node3" href="$azx__ati_8h.html" title="Sending AT commands and handling URCs." alt="" coords="181,95,255,121"/>
-<area shape="rect" id="node8" href="$azx__string_8h.html" title="String manipulation library." alt="" coords="335,169,429,196"/>
-<area shape="rect" id="node4" href="$azx__log_8h.html" title="Logging utilities to print on available output channels." alt="" coords="129,244,208,271"/>
-<area shape="rect" id="node6" href="$azx__buffer_8h.html" title="Buffers data that can be retrieved later." alt="" coords="5,169,100,196"/>
-<area shape="rect" id="node7" href="$azx__utils_8h.html" title="Various helpful utilities." alt="" coords="175,169,261,196"/>
-<area shape="rect" id="node5" title=" " alt="" coords="115,319,220,345"/>
+<area shape="rect" id="node1" title="Read from and write to a peripheral via ADC." alt="" coords="67,5,198,47"/>
+<area shape="rect" id="node2" title=" " alt="" coords="53,319,161,345"/>
+<area shape="rect" id="node3" href="$azx__ati_8h.html" title="Sending AT commands and handling URCs." alt="" coords="95,95,170,121"/>
+<area shape="rect" id="node7" href="$azx__string_8h.html" title="String manipulation library." alt="" coords="314,169,407,196"/>
+<area shape="rect" id="node4" href="$azx__log_8h.html" title="Logging utilities to print on available output channels." alt="" coords="171,244,249,271"/>
+<area shape="rect" id="node5" href="$azx__buffer_8h.html" title="Buffers data that can be retrieved later." alt="" coords="35,169,129,196"/>
+<area shape="rect" id="node6" href="$azx__utils_8h.html" title="Various helpful utilities." alt="" coords="154,169,239,196"/>
 </map>

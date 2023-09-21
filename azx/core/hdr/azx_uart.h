@@ -5,7 +5,7 @@
 #define LIBS_HDR_UART_H_
 /**
  * @file azx_uart.h
- * @version 1.0.1
+ * @version 1.0.2
  * @dependencies core/azx_log
  * @author Ioannis Demetriou
  * @author Sorin Basca

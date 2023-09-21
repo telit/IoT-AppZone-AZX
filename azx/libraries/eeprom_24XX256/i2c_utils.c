@@ -122,7 +122,7 @@ INT32 EEPROM_i2c_write(EEPROM_I2C_T *hi2c, UINT16 memAddress, UINT8 *pData, UINT
 
   M2MB_I2C_CFG_T configrw = {0};
   M2MB_I2C_RDWR_IOCTL_DATA rdrw_data = {0};
-  M2MB_I2C_MSG msgs[2] = {0};
+  M2MB_I2C_MSG msgs[1];
 
   if(!hi2c || !pData)
   {
@@ -153,6 +153,7 @@ INT32 EEPROM_i2c_write(EEPROM_I2C_T *hi2c, UINT16 memAddress, UINT8 *pData, UINT
   msgs[0].buf = (UINT8*)buf;
   msgs[0].flags = I2C_M_WR;
   msgs[0].len = bufsize; // 2 address bytes + data
+
   memcpy(buf + 2, pData, size );
 
   rdrw_data.msgs = &msgs[0];
@@ -186,7 +187,7 @@ INT32 EEPROM_i2c_write_byte(EEPROM_I2C_T *hi2c, UINT16 memAddress, UINT8 data)
 
   M2MB_I2C_CFG_T configrw = {0};
   M2MB_I2C_RDWR_IOCTL_DATA rdrw_data = {0};
-  M2MB_I2C_MSG msgs[2] = {0};
+  M2MB_I2C_MSG msgs[1];
 
   if(!hi2c)
   {
@@ -207,13 +208,12 @@ INT32 EEPROM_i2c_write_byte(EEPROM_I2C_T *hi2c, UINT16 memAddress, UINT8 data)
 
   buf[0] = memAddress >> 8;
   buf[1] = memAddress & 0xFF;
-  buf[1] = data;
+  buf[2] = data;
 
 
   msgs[0].buf = (UINT8*)buf;
   msgs[0].flags = I2C_M_WR;
   msgs[0].len = sizeof(buf); // 2 address bytes + data
-
 
   rdrw_data.msgs = &msgs[0];
   rdrw_data.nmsgs = 1;
@@ -243,7 +243,7 @@ INT32 EEPROM_i2c_read(EEPROM_I2C_T *hi2c, UINT16 memAddress, UINT8 *pData, UINT1
 
   M2MB_I2C_CFG_T configrw = {0};
   M2MB_I2C_RDWR_IOCTL_DATA rdrw_data = {0};
-  M2MB_I2C_MSG msgs[2] = {0};
+  M2MB_I2C_MSG msgs[2];
 
   if(!hi2c || !pData)
   {
@@ -304,7 +304,7 @@ INT32 EEPROM_i2c_read_delayed_chunked(EEPROM_I2C_T *hi2c, UINT16 memAddress, UIN
 
   M2MB_I2C_CFG_T configrw = {0};
   M2MB_I2C_RDWR_IOCTL_DATA rdrw_data = {0};
-  M2MB_I2C_MSG msgs[2] = {0};
+  M2MB_I2C_MSG msgs[2];
 
 
   if(!hi2c || !pData)
@@ -399,7 +399,7 @@ INT32 EEPROM_i2c_read_byte_from_address(EEPROM_I2C_T *hi2c, UINT16 memAddress, U
 
   M2MB_I2C_CFG_T configrw = {0};
   M2MB_I2C_RDWR_IOCTL_DATA rdrw_data = {0};
-  M2MB_I2C_MSG msgs[2] = {0};
+  M2MB_I2C_MSG msgs[2];
 
   if(!hi2c || !pData)
   {
@@ -455,7 +455,7 @@ INT32 EEPROM_i2c_read_byte(EEPROM_I2C_T *hi2c, UINT8 *pData)
 
   M2MB_I2C_CFG_T configrw = {0};
   M2MB_I2C_RDWR_IOCTL_DATA rdrw_data = {0};
-  M2MB_I2C_MSG msgs[2] = {0};
+  M2MB_I2C_MSG msgs[2];
 
   if(!hi2c || !pData)
   {

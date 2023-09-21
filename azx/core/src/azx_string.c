@@ -224,7 +224,7 @@ static const CHAR* get_allowed_chars(const CHAR* str, struct AllowedChars* allow
       /* This is a range, so expand it */
       CHAR start = *(str++);
       CHAR end = *(++str);
-      CHAR direction = 1;
+      INT8 direction = 1;
 
       if(end == '\\')
       {

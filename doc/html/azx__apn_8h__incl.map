@@ -1,11 +1,10 @@
 <map id="stage/azx/core/hdr/azx_apn.h" name="stage/azx/core/hdr/azx_apn.h">
-<area shape="rect" id="node1" title="Automatically setting APN based on the ICCID of the SIM." alt="" coords="225,5,356,47"/>
-<area shape="rect" id="node2" title=" " alt="" coords="281,319,389,345"/>
-<area shape="rect" id="node3" title=" " alt="" coords="174,95,253,121"/>
-<area shape="rect" id="node4" href="$azx__log_8h.html" title="Logging utilities to print on available output channels." alt="" coords="162,244,241,271"/>
-<area shape="rect" id="node6" href="$azx__string_8h.html" title="String manipulation library." alt="" coords="5,169,99,196"/>
-<area shape="rect" id="node7" href="$azx__ati_8h.html" title="Sending AT commands and handling URCs." alt="" coords="328,95,403,121"/>
-<area shape="rect" id="node5" title=" " alt="" coords="149,319,254,345"/>
-<area shape="rect" id="node8" href="$azx__buffer_8h.html" title="Buffers data that can be retrieved later." alt="" coords="334,169,429,196"/>
-<area shape="rect" id="node9" href="$azx__utils_8h.html" title="Various helpful utilities." alt="" coords="224,169,309,196"/>
+<area shape="rect" id="node1" title="Automatically setting APN based on the ICCID of the SIM." alt="" coords="73,5,204,47"/>
+<area shape="rect" id="node2" title=" " alt="" coords="224,319,332,345"/>
+<area shape="rect" id="node3" title=" " alt="" coords="22,95,100,121"/>
+<area shape="rect" id="node4" href="$azx__log_8h.html" title="Logging utilities to print on available output channels." alt="" coords="200,244,279,271"/>
+<area shape="rect" id="node5" href="$azx__string_8h.html" title="String manipulation library." alt="" coords="58,169,152,196"/>
+<area shape="rect" id="node6" href="$azx__ati_8h.html" title="Sending AT commands and handling URCs." alt="" coords="282,95,357,121"/>
+<area shape="rect" id="node7" href="$azx__buffer_8h.html" title="Buffers data that can be retrieved later." alt="" coords="387,169,482,196"/>
+<area shape="rect" id="node8" href="$azx__utils_8h.html" title="Various helpful utilities." alt="" coords="277,169,362,196"/>
 </map>

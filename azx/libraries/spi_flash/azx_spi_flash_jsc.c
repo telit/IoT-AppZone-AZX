@@ -2,7 +2,7 @@
 /*         >>> Copyright (C) Telit Communications S.p.A. Italy All Rights Reserved. <<<          */
 /*!
  @file
- 	 azx_spi_flash_jsc.c
+   azx_spi_flash_jsc.c
 
  @brief
  	 Contains the implementation functions for SPI NAND FLASH JSC JS28(P_U)xGQSxHG-83 family.
@@ -10,12 +10,12 @@
  @details
 
  @version
- 	 1.0.0
+   1.0.1
 
  @note
 
  @author
- 	 Norman Argiolas
+   Norman Argiolas
 
  @date
  	 File created on: Feb 13, 2020
@@ -47,16 +47,16 @@
 #define min(a,b)                    (((a)<(b))?(a):(b))
 #define max(a,b)                    (((a)>(b))?(a):(b))
 
-
+/*FabioPi removed designated initializers for RCVT*/
 #define SPI_FLASH_INFO(nm, vcc33, mid, did, did2, pagesz, oobsz, pg_per_blk,                                  \
                       blk_per_lun, max_bad_blk_per_lun, ecc_stren,                                           \
                       OTP_block, OTP_page_start, OTP_page_number)                                            \
-                      { .name = (char*)(nm), .vcc_33 = (vcc33), .mfr_id = (mid), .dev_id = (did), .dev_id2 = (did2),\
-                      .page_size = (pagesz), .oob_size = (oobsz),                                            \
-                      .pages_per_blk = (pg_per_blk), .blks_per_lun = (blk_per_lun),                          \
-                      .max_bad_blks_per_lun = (max_bad_blk_per_lun),                                         \
-                      .ecc_strength = (ecc_stren),                                                           \
-                      .otp_block = (OTP_block), .otp_page_start = (OTP_page_start), .otp_page_number = (OTP_page_number),}
+                      { (char*)(nm),  (vcc33), (mid), (did), (did2),\
+                      (pagesz), (oobsz),                                            \
+                      (pg_per_blk), (blk_per_lun),                          \
+                      (max_bad_blk_per_lun),                                         \
+                      (ecc_stren),                                                           \
+                      (OTP_block), (OTP_page_start), (OTP_page_number),}
 
 
 struct SPI_FLASH {
@@ -89,7 +89,8 @@ static struct SPI_FLASH spi_flash_table[] = {
     SPI_FLASH_INFO("JS28U4GQSKAHG", 1, 0xBF, 0xBD, 0x80,    4096, 256, 64, 2048,  40, 4, 3, 16, 32),
     SPI_FLASH_INFO("JS28U8GQSJAHG", 1, 0xBF, 0xEF, 0x80,    2048, 128, 64, 8192, 160, 4, 6, 16, 32),
     SPI_FLASH_INFO("JS28U8GQSKAHG", 1, 0xBF, 0xFE, 0x80,    4096, 256, 64, 4096,  80, 4, 3, 16, 32),
-    {.name = (char*) NULL, 		   0, 0,       0,    0,       0,   0,  0,    0,   0, 0, 0,  0, 0},
+	/*FabioPi removed designated initializers for RCVT*/
+    {/*.name = */(char*) NULL, 		   0, 0,       0,    0,       0,   0,  0,    0,   0, 0, 0,  0, 0},
 };
 /************** Hardware JSC SPI NAND Part Number Information ****************/
 
@@ -99,25 +100,26 @@ static struct SPI_FLASH spi_flash_table[] = {
  ****************************************************************************/
 //The following structures show the page layout including information
 //on ECC protected main and spare area (pages 43/44/45 of JSC datasheet).
+/*FabioPi removed designated initializers for RVCT*/
 static AZX_SPI_FLASH_ECCLAYOUT ecc_layout_64 = {
-    .eccbytes = 32,
-    .eccpos = {
+    /*.eccbytes = */32,
+    /*.eccpos = */{
         8, 9, 10, 11, 12, 13, 14, 15,
         24, 25, 26, 27, 28, 29, 30, 21,
         40, 41, 42, 43, 44, 45, 46, 47,
         56, 57, 58, 59, 60, 61, 62, 63},
-    .oobavail = 30,
-    .oobfree = {
+    /*.oobavail =*/ 30,
+    /*.oobfree =*/ {
         {
-        	.offset = 2,
-			.length = 30
+        	/*.offset =*/ 2,
+			/*.length = */30
         }
     }
 };
-
+/*FabioPi removed designated initializers for RVCT*/
 static AZX_SPI_FLASH_ECCLAYOUT ecc_layout_128 = {
-    .eccbytes = 64,
-    .eccpos = {
+    /*.eccbytes = */64,
+    /*.eccpos = */{
         64, 65, 66, 67, 68, 69, 70, 71,
         72, 73, 74, 75, 76, 77, 78, 79,
         80, 81, 82, 83, 84, 85, 86, 87,
@@ -126,18 +128,18 @@ static AZX_SPI_FLASH_ECCLAYOUT ecc_layout_128 = {
         104, 105, 106, 107, 108, 109, 110, 111,
         112, 113, 114, 115, 116, 117, 118, 119,
         120, 121, 122, 123, 124, 125, 126, 127},
-    .oobavail = 62,
-    .oobfree = {
+    /*.oobavail = */62,
+    /*.oobfree =*/ {
         {
-        	.offset = 2,
-			.length = 62
+        	/*.offset = */2,
+			/*.length =*/ 62
         }
     }
 };
 
 static AZX_SPI_FLASH_ECCLAYOUT ecc_layout_256 = {
-    .eccbytes = 128,
-    .eccpos = {
+    /*.eccbytes = */128,
+    /*.eccpos = */{
         128, 129, 130, 131, 132, 133, 134, 135,
         136, 137, 138, 139, 140, 141, 142, 143,
         144, 145, 146, 147, 148, 149, 150, 151,
@@ -154,11 +156,11 @@ static AZX_SPI_FLASH_ECCLAYOUT ecc_layout_256 = {
         232, 233, 234, 235, 236, 237, 238, 239,
         240, 241, 242, 243, 244, 245, 246, 247,
         248, 249, 250, 251, 252, 253, 254, 255},
-    .oobavail = 126,
-    .oobfree = {
+    /*.oobavail = */126,
+    /*.oobfree = */{
         {
-        	.offset = 2,
-			.length = 126
+        	/*.offset =*/ 2,
+			/*.length =*/ 126
         }
     }
 };
@@ -440,7 +442,6 @@ void SPI_FLASH_logFormatted(SPI_FLASH_LOG_HOOK_LEVELS_E level,
 		);
 		break;
 	case SPI_FLASH_LOG_LEVEL_INFO:
-		offset = 0;
 		break;
 	case SPI_FLASH_LOG_LEVEL_DEBUG:
 		offset = sprintf(buf, "%s %u.%03u %8s:%d - %8s: ",
@@ -450,18 +451,15 @@ void SPI_FLASH_logFormatted(SPI_FLASH_LOG_HOOK_LEVELS_E level,
 				line,
 				function
 		);
-
 		break;
 	default:
-		offset = 0;
 		break;
 	}
 	va_start(arg, fmt);
 	vsnprintf(buf + offset, bufSize-offset, fmt, arg);
 	va_end(arg);
 
-	AZX_LOG_INFO(buf);  //This is a generic function, like printf
-	AZX_LOG_INFO("\r\n");  //This is a generic function, like printf
+	AZX_LOG_INFO("%s\r\n", buf);  //This is a generic function, like printf
 
 }
 /***************** SPI_FLASH_logFormatted ***********************************************/

@@ -35,7 +35,7 @@
   <td id="projectlogo"><img alt="Logo" src="telit-logo.png"/></td>
   <td id="projectalign" style="padding-left: 2em;">
    <div id="projectname">AZ Extension Libraries
-   &#160;<span id="projectnumber">1.1.7.57e4a7a</span>
+   &#160;<span id="projectnumber">1.5.55.f372318</span>
    </div>
    <div id="projectbrief">A set of companion libraries that make AZ development easier</div>
   </td>
@@ -101,7 +101,19 @@ $(document).ready(function(){initNavTree('azx__pdu_enc_8h.html','');});
 
 <p>Encoding functionalities for PDUs.  
 <a href="#details">More...</a></p>
-
+<div class="textblock"><code>#include &quot;azx_pduCommon.h&quot;</code><br />
+</div><div class="textblock"><div class="dynheader">
+Include dependency graph for azx_pduEnc.h:</div>
+<div class="dyncontent">
+<div class="center"><img src="azx__pdu_enc_8h__incl.png" border="0" usemap="#stage_2azx_2libraries_2pdu__codec_2azx__pdu_enc_8h" alt=""/></div>
+<map name="stage_2azx_2libraries_2pdu__codec_2azx__pdu_enc_8h" id="stage_2azx_2libraries_2pdu__codec_2azx__pdu_enc_8h">
+<area shape="rect" title="Encoding functionalities for PDUs." alt="" coords="5,5,181,47"/>
+<area shape="rect" href="azx__pdu_common_8h_source.html" title=" " alt="" coords="26,95,161,121"/>
+<area shape="rect" title=" " alt="" coords="15,169,81,196"/>
+<area shape="rect" title=" " alt="" coords="105,169,175,196"/>
+</map>
+</div>
+</div>
 <p><a href="azx__pdu_enc_8h_source.html">Go to the source code of this file.</a></p>
 <table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="func-members"></a>
@@ -112,6 +124,9 @@ Functions</h2></td></tr>
 <tr class="memitem:gacb79107f730c3a648b4033429d3cc8d8"><td class="memItemLeft" align="right" valign="top">int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__pdu_enc_usage.html#gacb79107f730c3a648b4033429d3cc8d8">azx_pdu_encode</a> (CHAR *number, CHAR *str, UINT8 *pdu, INT32 dcs)</td></tr>
 <tr class="memdesc:gacb79107f730c3a648b4033429d3cc8d8"><td class="mdescLeft">&#160;</td><td class="mdescRight">Encode a PDU from the input parameters.  <a href="group__pdu_enc_usage.html#gacb79107f730c3a648b4033429d3cc8d8">More...</a><br /></td></tr>
 <tr class="separator:gacb79107f730c3a648b4033429d3cc8d8"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:gaccb4e2ccee1b643e47dc243c5351883a"><td class="memItemLeft" align="right" valign="top">INT32&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__pdu_enc_usage.html#gaccb4e2ccee1b643e47dc243c5351883a">azx_pdu_encode_generic</a> (AZX_SMS_ADDR_NUM_TYPE_E type, CHAR *number, CHAR *str, UINT8 *pdu, INT32 dcs)</td></tr>
+<tr class="memdesc:gaccb4e2ccee1b643e47dc243c5351883a"><td class="mdescLeft">&#160;</td><td class="mdescRight">Encode a PDU from the input parameters, allowing to select the number address type.  <a href="group__pdu_enc_usage.html#gaccb4e2ccee1b643e47dc243c5351883a">More...</a><br /></td></tr>
+<tr class="separator:gaccb4e2ccee1b643e47dc243c5351883a"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
 <div class="textblock"><p>Encoding functionalities for PDUs. </p>

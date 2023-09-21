@@ -23,6 +23,7 @@ for the JavaScript code in this file
 var NAVTREE =
 [
   [ "AZ Extension Libraries", "index.html", [
+    [ "Deprecated List", "deprecated.html", null ],
     [ "Modules", "modules.html", "modules" ],
     [ "Data Structures", "annotated.html", [
       [ "Data Structures", "annotated.html", "annotated_dup" ],
@@ -53,14 +54,14 @@ var NAVTREE =
 var NAVTREEINDEX =
 [
 ".html",
-"azx__gnu__sys__socket_8h.html#a75e4bdec5e6afb661e8cbae72452fde7",
-"azx__spi__flash__hw__external_8h.html#acf571d297920367214835922a78fb95ca8c155cf062b070fd6eda798bf5427ed5",
-"group___a_z_x___f_t_p___c_o_n_f.html#gadd26991f6b171b823da3ec9f919985c8",
-"group__log_conf.html#gga03b618927cb5d884386832ab76781760ab87a0049b27ce615b28ea77f51118286",
-"group__zlib_usage.html#gaa5b6b3ffd313880af1dfa174fc33f97b",
-"struct_a_z_x___l_o_g___c_f_g___t.html#aa034a943c56f918fe8dbbf6a06ade44c",
-"structlfs2.html#a5ef0d92f3b433af4d0eff5a7354361b1",
-"zlib_8h.html#a655c43f39bb876aa13ff7d3b4857d0d1"
+"azx__gnu__sys__socket_8h.html#a19132cffa5b1c7762f0948417e616555",
+"azx__spi__flash__hw__external_8h.html#a86bd3d46e237918358c2167c21aff08ba5dabb6cbc1f2cf77adf09b1d03275d8f",
+"dir_81e078f8aaa4e8e7a8501608db12a38f.html",
+"group__http_conf.html#gac324733f55c37381f15963897b55dd68",
+"group__zlib_usage.html#ga0e3bf01a513133fd058555a8521ee293",
+"smtp_8h.html#af6984cc870cb233aaebff14c78291179",
+"structct__data__s.html#a67cd3c3267ba768c4494b36d5929c4bf",
+"structlfs2__superblock.html#a15d8fc19e04011a671222430926594d1"
 ];
 
 var SYNCONMSG = 'click to disable panel synchronisation';

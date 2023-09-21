@@ -1,4 +1,4 @@
-Copyright 2021, Telit
+Copyright 2023, Telit
 All rights reserved.
 
 MIT License

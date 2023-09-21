@@ -10,7 +10,7 @@
  @details
 
  @version
- 	 1.0.0
+ 	 1.0.1
 
  @note
 
@@ -124,10 +124,20 @@ JSC_uint32 azx_spi_flash_get_ticks(void)
 	M2MB_RTC_TIMEVAL_T timeval;
 
 	fd = m2mb_rtc_open("/dev/rtc0", 0);
-	m2mb_rtc_ioctl(fd, M2MB_RTC_IOCTL_GET_TIMEVAL, &timeval);
-	m2mb_rtc_close(fd);
+	if(-1 == fd)
+	{
+		return 0;
+	}
+	if (-1 == m2mb_rtc_ioctl(fd, M2MB_RTC_IOCTL_GET_TIMEVAL, &timeval))
+	{
+		return 0;
+	}
+	if(m2mb_rtc_close(fd) == -1)
+	{
+		AZX_LOG_ERROR("Cannot close rtc!\r\n");
+	}
 
-    return timeval.sec;
+	return timeval.sec;
 }
 /***************** getTicks ***********************************************/
 
@@ -167,7 +177,7 @@ INT32 openGpioOutput(int pin)
 	char path[16];
 
 	memset(path, 0, sizeof(path));
-	sprintf(path, "/dev/GPIO%d", pin);
+	snprintf(path, sizeof(path), "/dev/GPIO%d", pin);
 
 	g_fd = m2mb_gpio_open( path, 0 );
 	if( g_fd != -1 )
@@ -291,17 +301,17 @@ AZX_SPI_FLASH_CODE_RESULT_E azx_spi_flash_spi_initialization(JSC_int32 *spi_fd)
 	{
 		memset(&cfg, 0, sizeof(cfg));
 
-		cfg.spi_mode = M2MB_SPI_MODE_0; //clock idle LOW, data driven on falling edge and sampled on rising edge
-		cfg.cs_polarity = M2MB_SPI_CS_ACTIVE_LOW;
-		cfg.cs_mode = M2MB_SPI_CS_DEASSERT;
-		cfg.endianness = M2MB_SPI_NATIVE; //M2MB_SPI_LITTLE_ENDIAN; //M2MB_SPI_BIG_ENDIAN;
-		cfg.callback_fn = NULL;
-		cfg.callback_ctxt = NULL; //(void *)userdata; //NULL;;
+		//cfg.spi_mode = M2MB_SPI_MODE_0; /*already done by memset */ //clock idle LOW, data driven on falling edge and sampled on rising edge
+		//cfg.cs_polarity = M2MB_SPI_CS_ACTIVE_LOW; /*already done by memset */
+		//cfg.cs_mode = M2MB_SPI_CS_DEASSERT; /*already done by memset */
+		//cfg.endianness = M2MB_SPI_NATIVE; /*already done by memset */ //M2MB_SPI_LITTLE_ENDIAN; //M2MB_SPI_BIG_ENDIAN;
+		//cfg.callback_fn = NULL; /*already done by memset */
+		//cfg.callback_ctxt = NULL; /*already done by memset */
 		cfg.clk_freq_Hz = 1000000;
 		cfg.bits_per_word = 8;
 		cfg.cs_clk_delay_cycles = 3;
-		cfg.inter_word_delay_cycles = 0;
-		cfg.loopback_mode = FALSE;
+		//cfg.inter_word_delay_cycles = 0; /*already done by memset */
+		//cfg.loopback_mode = FALSE; /*already done by memset */
 
 		ret = m2mb_spi_ioctl(s_fd, M2MB_SPI_IOCTL_SET_CFG, (void *)&cfg);
 		if(ret == 0)

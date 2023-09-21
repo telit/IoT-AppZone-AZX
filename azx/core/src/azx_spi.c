@@ -35,7 +35,6 @@ static UINT32 convert_speed_to_hz(INT16 speed)
 static BOOLEAN configure_spi(INT16 mode, INT16 speed, UINT8 bits_per_word)
 {
   M2MB_SPI_CFG_T cfg;
-  memset(&cfg, 0, sizeof(cfg));
 #ifdef AZX_SPI_UPDATE_OLD_CONFIG
   if(-1 == m2mb_spi_ioctl(fd, M2MB_SPI_IOCTL_GET_CFG, (void*)&cfg))
   {

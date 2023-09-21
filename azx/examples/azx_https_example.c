@@ -16,22 +16,29 @@
 
 
 
-INT8 cbEvt = 0;
-int CB_COUNT = 0;
+INT32 g_cbArg = 0;
 
-INT32 DATA_CB(void *buffer, UINT32 size, INT8* flag)
+INT32 DATA_CB(void *buffer, UINT32 size, void *cbArg)
 {
+  INT32 CB_COUNT = *(INT32*)cbArg;
   /**** Stop http donwload on a specific user event
   CB_COUNT++;
   if(CB_COUNT >= 3)
   {
     AZX_LOG_INFO("\r\nCB COUNT LIMIT REACHED\r\n");
-   *flag = 1;
-    return 0;
+   
+    return 1;
   }
    */
-  strcat((char*) buffer,"\0");
-  MYLOG("%s",buffer);
+  if(buffer != NULL) /*received data*/
+  {
+    strcat((char*) buffer,"\0");
+    MYLOG("%s",buffer);
+  }
+  else /*transmitted data*/
+  {
+    /*size will contain the amount of transmitted data*/
+  }
 
   return 0;
 }
@@ -96,7 +103,7 @@ void M2MB_main( int argc, char **argv )
   cbOpt.user_cb_bytes_size = 1500;  //call data callback every 1500 bytes
   cbOpt.cbFunc = DATA_CB;
   cbOpt.cbData = m2mb_os_malloc(cbOpt.user_cb_bytes_size + 1); //one more element for \0
-  cbOpt.cbEvtFlag = &cbEvt;
+  cbOpt.cbArg = &g_cbArg;
 
   azx_http_setCB(&hi,cbOpt);
 

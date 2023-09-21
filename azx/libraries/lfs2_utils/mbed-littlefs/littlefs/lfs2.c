@@ -1170,7 +1170,14 @@ static lfs2_stag_t lfs2_dir_find(lfs2_t *lfs2, lfs2_mdir_t *dir,
 		// find entry matching name
 		while (true) {
 
-			struct lfs2_dir_find_match data = (struct lfs2_dir_find_match ) { lfs2, name, namelen };
+			struct lfs2_dir_find_match data =
+/*
+* Fabiopi For RVCT
+*/
+#ifndef _ARMABI
+			    (struct lfs2_dir_find_match )
+#endif
+			    { lfs2, name, namelen };
 			tag = lfs2_dir_fetchmatch(lfs2, dir,
 									  dir->tail,
 									  LFS2_MKTAG(0x780, 0, 0),
@@ -1542,7 +1549,11 @@ static int lfs2_dir_compact(lfs2_t *lfs2, lfs2_mdir_t *dir,
 	//    one metadata block in the pair, effectively making this useless
 	if (lfs2->cfg->block_cycles > 0
 			&& (dir->rev % ((lfs2->cfg->block_cycles + 1) | 1) == 0)) {
-		if (lfs2_pair_cmp(dir->pair, (const lfs2_block_t[2] ) { 0, 1 }) == 0) {
+	  /*
+	   * Fabiopi For RVCT
+	   */
+	    const lfs2_block_t cmp_pair[2] = { 0, 1 };
+		if (lfs2_pair_cmp(dir->pair, cmp_pair) == 0) {
 			// oh no! we're writing too much to the superblock,
 			// should we expand?
 			lfs2_ssize_t res = lfs2_fs_size(lfs2);
@@ -1586,10 +1597,11 @@ static int lfs2_dir_compact(lfs2_t *lfs2, lfs2_mdir_t *dir,
 	while (true) {
 		{
 			// setup commit state
-			struct lfs2_commit commit = { .block = dir->pair[1], .off = 0,
-					.ptag = 0xffffffff, .crc = 0xffffffff,
+		  /*FabioPi remove designated initializers for RVCT*/
+			struct lfs2_commit commit = { /*.block =*/ dir->pair[1], /*.off  =*/ 0,
+					/*.ptag = */0xffffffff, /*.crc = */0xffffffff,
 
-					.begin = 0, .end = lfs2->cfg->block_size - 8, };
+					/*.begin = */0, /*.end = */ lfs2->cfg->block_size - 8, };
 
 			// erase block to write to
 			int err = lfs2_bd_erase(lfs2, dir->pair[1]);
@@ -1689,7 +1701,11 @@ static int lfs2_dir_compact(lfs2_t *lfs2, lfs2_mdir_t *dir,
 			dir->off = commit.off;
 			dir->etag = commit.ptag;
 			// update gstate
-			lfs2->gdelta = (lfs2_gstate_t ) { 0 };
+			/*FabioPi RVCT*/
+			{
+			  lfs2_gstate_t gstate_update =  { 0 };
+			  lfs2->gdelta = gstate_update;
+			}
 			if (!relocated) {
 				lfs2->gdisk = lfs2->gstate;
 			}
@@ -1703,9 +1719,12 @@ static int lfs2_dir_compact(lfs2_t *lfs2, lfs2_mdir_t *dir,
 		if (!tired) {
 			LFS2_DEBUG("Bad block at 0x%"PRIx32, dir->pair[1]);
 		}
-
+    /*
+     * Fabiopi For RVCT
+     */
+		const lfs2_block_t cmp_pair[2] = { 0, 1 };
 		// can't relocate superblock, filesystem is now frozen
-		if (lfs2_pair_cmp(dir->pair, (const lfs2_block_t[2] ) { 0, 1 }) == 0) {
+		if (lfs2_pair_cmp(dir->pair, cmp_pair ) == 0) {
 			LFS2_WARN("Superblock 0x%"PRIx32" has become unwritable",
 					dir->pair[1]);
 			return LFS2_ERR_NOSPC;
@@ -1793,10 +1812,10 @@ static int lfs2_dir_commit(lfs2_t *lfs2, lfs2_mdir_t *dir,
 
 	if (dir->erased || dir->count >= 0xff) {
 		// try to commit
-		struct lfs2_commit commit = { .block = dir->pair[0], .off = dir->off,
-				.ptag = dir->etag, .crc = 0xffffffff,
+		struct lfs2_commit commit = { /*.block = */dir->pair[0],/* .off = */dir->off,
+				/*.ptag = */dir->etag, /*.crc =*/ 0xffffffff,
 
-				.begin = dir->off, .end = lfs2->cfg->block_size - 8, };
+				/*.begin = */dir->off, /*.end =*/ lfs2->cfg->block_size - 8, };
 
 		// traverse attrs that need to be written out
 		lfs2_pair_tole32(dir->tail);
@@ -1862,7 +1881,11 @@ static int lfs2_dir_commit(lfs2_t *lfs2, lfs2_mdir_t *dir,
 		dir->etag = commit.ptag;
 		// and update gstate
 		lfs2->gdisk = lfs2->gstate;
-		lfs2->gdelta = (lfs2_gstate_t ) { 0 };
+		/*FabioPi*/
+		{
+		  lfs2_gstate_t gstate_update = { 0 };
+		  lfs2->gdelta = gstate_update;
+		}
 	} else {
 		compact:
 		// fall back to compaction
@@ -3669,9 +3692,13 @@ static int lfs2_init(lfs2_t *lfs2, const struct lfs2_config *cfg) {
 	lfs2->root[1] = LFS2_BLOCK_NULL;
 	lfs2->mlist = NULL;
 	lfs2->seed = 0;
-	lfs2->gdisk = (lfs2_gstate_t ) { 0 };
-	lfs2->gstate = (lfs2_gstate_t ) { 0 };
-	lfs2->gdelta = (lfs2_gstate_t ) { 0 };
+
+	{
+	  lfs2_gstate_t gstate_default = { 0 };
+      lfs2->gdisk = gstate_default;
+      lfs2->gstate = gstate_default;
+      lfs2->gdelta = gstate_default;
+	}
 #ifdef LFS2_MIGRATE
 	lfs2->lfs21 = NULL;
 #endif
@@ -3733,10 +3760,11 @@ int lfs2_format(lfs2_t *lfs2, const struct lfs2_config *cfg) {
 		}
 
 		// write one superblock
-		lfs2_superblock_t superblock = { .version = LFS2_DISK_VERSION,
-				.block_size = lfs2->cfg->block_size, .block_count =
-						lfs2->cfg->block_count, .name_max = lfs2->name_max,
-				.file_max = lfs2->file_max, .attr_max = lfs2->attr_max, };
+		/*FabioPi RVCT*/
+		lfs2_superblock_t superblock = { /*.version = */LFS2_DISK_VERSION,
+				/*.block_size = */lfs2->cfg->block_size, /*.block_count =*/
+						lfs2->cfg->block_count, /*.name_max = */lfs2->name_max,
+				/*.file_max = */lfs2->file_max, /*.attr_max =*/ lfs2->attr_max, };
 
 		lfs2_superblock_tole32(&superblock);
 
@@ -3757,7 +3785,11 @@ int lfs2_format(lfs2_t *lfs2, const struct lfs2_config *cfg) {
 		}
 
 		// sanity check that fetch works
-		err = lfs2_dir_fetch(lfs2, &root, (const lfs2_block_t[2] ) { 0, 1 });
+		/*FabioPi RVCT*/
+		{
+		  const lfs2_block_t fetch_block[2] = { 0, 1 };
+		  err = lfs2_dir_fetch(lfs2, &root, fetch_block);
+		}
 		if (err) {
 			goto cleanup;
 		}

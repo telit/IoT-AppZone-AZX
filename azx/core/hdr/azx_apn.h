@@ -5,7 +5,7 @@
 #define LIBS_HDR_APN_H_
 /**
  * @file azx_apn.h
- * @version 1.0.2
+ * @version 1.0.3
  * @dependencies core/azx_ati core/azx_string
  * @author Demetris Constantinou
  * @author Sorin Basca

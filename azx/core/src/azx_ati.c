@@ -127,6 +127,11 @@ static UINT8* find_hdr(SSIZE_T size, UINT8* bytes, const UINT8* hdr)
 {
   UINT16 i = 0;
   UINT16 hdr_idx = 0;
+  
+  if( !bytes )
+  {
+    return NULL;
+  }
 
   while(i < size && hdr[hdr_idx] != '\0')
   {
@@ -161,8 +166,13 @@ static UINT8* find_hdr(SSIZE_T size, UINT8* bytes, const UINT8* hdr)
 
 static struct AzxBinaryData handle_urc_lines(AtiData* data, SSIZE_T size, UINT8* bytes)
 {
-  UINT8 i = 0;
+  UINT8 i;
   struct AzxBinaryData response = {0};
+
+  if( !bytes )
+  {
+    return response;
+  }
 
   for(i = 0; i < MAX_URC_HANDLERS && size > 0; ++i)
   {
@@ -172,10 +182,12 @@ static struct AzxBinaryData handle_urc_lines(AtiData* data, SSIZE_T size, UINT8*
     {
       break;
     }
+    
     if(!silentMode)
     {
       AZX_LOG_TRACE("Checking URC with header %s\r\n", hnd->hdr);
     }
+    
     while(NULL != (p = find_hdr(size, bytes, (const UINT8*)hnd->hdr)))
     {
       UINT8* end = p;
@@ -285,7 +297,7 @@ static BOOLEAN starts_with(const UINT8* buf, UINT16 size, const CHAR* str)
 
 static BOOLEAN is_message_complete(const struct AzxBinaryData* msg)
 {
-  UINT16 idx = 0;
+  UINT16 idx;
   UINT16 i = 0;
   for(idx = 0; idx < msg->size; ++idx)
   {
@@ -318,7 +330,7 @@ static UINT16 process_ati_response(AtiData* data, SSIZE_T size, UINT8* bytes, UI
     return idx;
   }
 
-  lock(data);
+
   if(!data->processing)
   {
     if(!silentMode)
@@ -353,7 +365,7 @@ static UINT16 process_ati_response(AtiData* data, SSIZE_T size, UINT8* bytes, UI
   }
 
 end:
-  unlock(data);
+
   return idx;
 }
 
@@ -379,6 +391,8 @@ static void ati_cb( M2MB_ATI_HANDLE h, M2MB_ATI_EVENTS_E ati_event,
     return;
   }
 
+  lock(data);
+
   size = *((const UINT16*)resp_struct);
   if(!silentMode)
   {
@@ -395,6 +409,7 @@ static void ati_cb( M2MB_ATI_HANDLE h, M2MB_ATI_EVENTS_E ati_event,
     else
     {
       AZX_LOG_WARN("AT response is still bigger in size than the buffer size\r\n");
+      unlock(data);
       return;
     }
   }
@@ -411,6 +426,7 @@ static void ati_cb( M2MB_ATI_HANDLE h, M2MB_ATI_EVENTS_E ati_event,
   if(read_size <= 0)
   {
     AZX_LOG_WARN("Unable to perform AT read\r\n");
+    unlock(data);
     return;
   }
 
@@ -422,6 +438,8 @@ static void ati_cb( M2MB_ATI_HANDLE h, M2MB_ATI_EVENTS_E ati_event,
   }
 
   data->readDataIdx = process_ati_response(data, read_size, data->readData, data->readDataIdx);
+  unlock(data);
+
 }
 
 __attribute__((weak)) M2MB_RESULT_E ati_send_cmd( M2MB_ATI_HANDLE handle, void *buf, SIZE_T nbyte )
@@ -603,7 +621,6 @@ static const struct AzxBinaryData* send_at_command_v(UINT8 instance, INT32 timeo
   }
 
   cmd[cmd_len++] = '\r';
-  cmd[cmd_len++] = '\n';
   cmd[cmd_len] = '\0';
 
   data->rsp[data->next_response].size = 0;
@@ -793,7 +810,7 @@ static BOOLEAN is_silent_command(const CHAR* cmd)
   return FALSE;
 }
 
-void azx_ati_disable_logs()
+void azx_ati_disable_logs(void)
 {
   fullySilentMode = TRUE;
 }

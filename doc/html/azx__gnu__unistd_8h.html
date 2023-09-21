@@ -35,7 +35,7 @@
   <td id="projectlogo"><img alt="Logo" src="telit-logo.png"/></td>
   <td id="projectalign" style="padding-left: 2em;">
    <div id="projectname">AZ Extension Libraries
-   &#160;<span id="projectnumber">1.1.7.57e4a7a</span>
+   &#160;<span id="projectnumber">1.5.55.f372318</span>
    </div>
    <div id="projectbrief">A set of companion libraries that make AZ development easier</div>
   </td>
@@ -103,17 +103,21 @@ $(document).ready(function(){initNavTree('azx__gnu__unistd_8h.html','');});
 <p>gnu definition  
 <a href="#details">More...</a></p>
 <div class="textblock"><code>#include &lt;unistd.h&gt;</code><br />
+<code>#include &lt;sys/types.h&gt;</code><br />
 <code>#include &quot;m2mb_types.h&quot;</code><br />
+<code>#include &quot;m2mb_os_api.h&quot;</code><br />
 <code>#include &quot;m2mb_fs_posix.h&quot;</code><br />
 </div><div class="textblock"><div class="dynheader">
 Include dependency graph for azx_gnu_unistd.h:</div>
 <div class="dyncontent">
 <div class="center"><img src="azx__gnu__unistd_8h__incl.png" border="0" usemap="#stage_2azx_2libraries_2gnu_2azx__gnu__unistd_8h" alt=""/></div>
 <map name="stage_2azx_2libraries_2gnu_2azx__gnu__unistd_8h" id="stage_2azx_2libraries_2gnu_2azx__gnu__unistd_8h">
-<area shape="rect" title="gnu definition" alt="" coords="75,5,228,47"/>
+<area shape="rect" title="gnu definition" alt="" coords="191,5,344,47"/>
 <area shape="rect" title=" " alt="" coords="5,95,73,121"/>
-<area shape="rect" title=" " alt="" coords="97,95,205,121"/>
-<area shape="rect" title=" " alt="" coords="230,95,355,121"/>
+<area shape="rect" title=" " alt="" coords="98,95,189,121"/>
+<area shape="rect" title=" " alt="" coords="213,95,321,121"/>
+<area shape="rect" title=" " alt="" coords="346,95,461,121"/>
+<area shape="rect" title=" " alt="" coords="485,95,610,121"/>
 </map>
 </div>
 </div><div class="textblock"><div class="dynheader">
@@ -148,12 +152,18 @@ Macros</h2></td></tr>
 <tr class="memitem:a160e48b6f44d4559f0859360a340cf23"><td class="memItemLeft" align="right" valign="top"><a id="a160e48b6f44d4559f0859360a340cf23"></a>
 #define&#160;</td><td class="memItemRight" valign="bottom"><b>lseek</b>&#160;&#160;&#160;m2mb_fs_lseek</td></tr>
 <tr class="separator:a160e48b6f44d4559f0859360a340cf23"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:acc8612feeec5f569b1e096e3110d0dca"><td class="memItemLeft" align="right" valign="top"><a id="acc8612feeec5f569b1e096e3110d0dca"></a>
+#define&#160;</td><td class="memItemRight" valign="bottom"><b>sleep</b>&#160;&#160;&#160;azx_gnu_sleep</td></tr>
+<tr class="separator:acc8612feeec5f569b1e096e3110d0dca"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="func-members"></a>
 Functions</h2></td></tr>
 <tr class="memitem:a0df411b3596f1d5f25031fce69c5f696"><td class="memItemLeft" align="right" valign="top">int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="azx__gnu__unistd_8h.html#a0df411b3596f1d5f25031fce69c5f696">azx_gnu_chown</a> (const char *__path, uid_t __owner, gid_t __group)</td></tr>
 <tr class="memdesc:a0df411b3596f1d5f25031fce69c5f696"><td class="mdescLeft">&#160;</td><td class="mdescRight">chown  <a href="azx__gnu__unistd_8h.html#a0df411b3596f1d5f25031fce69c5f696">More...</a><br /></td></tr>
 <tr class="separator:a0df411b3596f1d5f25031fce69c5f696"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a987f57aa1eaeedf6d097359e95505478"><td class="memItemLeft" align="right" valign="top"><a id="a987f57aa1eaeedf6d097359e95505478"></a>
+unsigned&#160;</td><td class="memItemRight" valign="bottom"><b>azx_gnu_sleep</b> (unsigned int seconds)</td></tr>
+<tr class="separator:a987f57aa1eaeedf6d097359e95505478"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
 <div class="textblock"><p>gnu definition </p>

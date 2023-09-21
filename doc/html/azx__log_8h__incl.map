@@ -1,5 +1,4 @@
 <map id="stage/azx/core/hdr/azx_log.h" name="stage/azx/core/hdr/azx_log.h">
-<area shape="rect" id="node1" title="Logging utilities to print on available output channels." alt="" coords="59,5,190,47"/>
-<area shape="rect" id="node2" title=" " alt="" coords="5,95,113,121"/>
-<area shape="rect" id="node3" title=" " alt="" coords="137,95,243,121"/>
+<area shape="rect" id="node1" title="Logging utilities to print on available output channels." alt="" coords="5,5,136,47"/>
+<area shape="rect" id="node2" title=" " alt="" coords="17,95,125,121"/>
 </map>

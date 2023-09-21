@@ -35,7 +35,7 @@
   <td id="projectlogo"><img alt="Logo" src="telit-logo.png"/></td>
   <td id="projectalign" style="padding-left: 2em;">
    <div id="projectname">AZ Extension Libraries
-   &#160;<span id="projectnumber">1.1.7.57e4a7a</span>
+   &#160;<span id="projectnumber">1.5.55.f372318</span>
    </div>
    <div id="projectbrief">A set of companion libraries that make AZ development easier</div>
   </td>
@@ -137,20 +137,20 @@ $(document).ready(function(){initNavTree('azx__ati_8h_source.html','');});
 <div class="line"><a name="l00239"></a><span class="lineno">  239</span>&#160; </div>
 <div class="line"><a name="l00251"></a><span class="lineno">  251</span>&#160;<span class="keywordtype">void</span> <a class="code" href="azx__ati_8h.html#a8bc3c89a08fc64c8156c360113acf025">azx_ati_disable_log_for_cmd</a>(<span class="keyword">const</span> CHAR* prefix);</div>
 <div class="line"><a name="l00252"></a><span class="lineno">  252</span>&#160; </div>
-<div class="line"><a name="l00262"></a><span class="lineno">  262</span>&#160;<span class="keywordtype">void</span> <a class="code" href="azx__ati_8h.html#a9e5a33e4da18d9b57e03b240eac715a6">azx_ati_disable_logs</a>();</div>
+<div class="line"><a name="l00262"></a><span class="lineno">  262</span>&#160;<span class="keywordtype">void</span> <a class="code" href="azx__ati_8h.html#a51c6e489f7ae21d97e62ed14306825f9">azx_ati_disable_logs</a>(<span class="keywordtype">void</span>);</div>
 <div class="line"><a name="l00263"></a><span class="lineno">  263</span>&#160; </div>
 <div class="line"><a name="l00272"></a><span class="lineno">  272</span>&#160;<span class="keywordtype">void</span> <a class="code" href="azx__ati_8h.html#a6d72794fd52d7cc0830d420e6cdb48be">azx_ati_deinitEx</a>(UINT8 instance);</div>
 <div class="line"><a name="l00273"></a><span class="lineno">  273</span>&#160; </div>
 <div class="line"><a name="l00274"></a><span class="lineno">  274</span>&#160;<span class="preprocessor">#endif </span><span class="comment">/* !defined( UUID_713c3323_6a68_43dd_80ac_e7dddf0013e8 ) */</span><span class="preprocessor"></span></div>
 </div><!-- fragment --></div><!-- contents -->
 </div><!-- doc-content -->
-<div class="ttc" id="aazx__ati_8h_html_a9e5a33e4da18d9b57e03b240eac715a6"><div class="ttname"><a href="azx__ati_8h.html#a9e5a33e4da18d9b57e03b240eac715a6">azx_ati_disable_logs</a></div><div class="ttdeci">void azx_ati_disable_logs()</div><div class="ttdoc">Disables the logging of all AT commands.</div></div>
 <div class="ttc" id="aazx__buffer_8h_html"><div class="ttname"><a href="azx__buffer_8h.html">azx_buffer.h</a></div><div class="ttdoc">Buffers data that can be retrieved later.</div></div>
 <div class="ttc" id="aazx__ati_8h_html_aaef1d0f24f5d53df987ded60b52548c8"><div class="ttname"><a href="azx__ati_8h.html#aaef1d0f24f5d53df987ded60b52548c8">azx_urc_received_cb</a></div><div class="ttdeci">void(* azx_urc_received_cb)(const CHAR *msg)</div><div class="ttdoc">Callback notifying of a new URC.</div><div class="ttdef"><b>Definition:</b> azx_ati.h:196</div></div>
 <div class="ttc" id="aazx__ati_8h_html_a8bc3c89a08fc64c8156c360113acf025"><div class="ttname"><a href="azx__ati_8h.html#a8bc3c89a08fc64c8156c360113acf025">azx_ati_disable_log_for_cmd</a></div><div class="ttdeci">void azx_ati_disable_log_for_cmd(const CHAR *prefix)</div><div class="ttdoc">Prevents the AZX ATI component from logging a certain AT command command.</div></div>
 <div class="ttc" id="aazx__ati_8h_html_a6d72794fd52d7cc0830d420e6cdb48be"><div class="ttname"><a href="azx__ati_8h.html#a6d72794fd52d7cc0830d420e6cdb48be">azx_ati_deinitEx</a></div><div class="ttdeci">void azx_ati_deinitEx(UINT8 instance)</div><div class="ttdoc">Deinitializes an AT instance.</div></div>
 <div class="ttc" id="aazx__ati_8h_html_a07dff37ebce7d978dc94a76f2c15bbf2"><div class="ttname"><a href="azx__ati_8h.html#a07dff37ebce7d978dc94a76f2c15bbf2">azx_urc_noop_cb</a></div><div class="ttdeci">void azx_urc_noop_cb(const CHAR *msg)</div><div class="ttdoc">Convenience callback which makes some URC be ignored.</div></div>
 <div class="ttc" id="aazx__ati_8h_html_a774fb48c0c8f5e92d95be260f1503381"><div class="ttname"><a href="azx__ati_8h.html#a774fb48c0c8f5e92d95be260f1503381">azx_ati_sendCommandAndLogEx</a></div><div class="ttdeci">const CHAR * azx_ati_sendCommandAndLogEx(UINT8 instance, INT32 timeout_ms, const CHAR *cmd,...)</div><div class="ttdoc">Runs an AT command and logs the command and response.</div></div>
+<div class="ttc" id="aazx__ati_8h_html_a51c6e489f7ae21d97e62ed14306825f9"><div class="ttname"><a href="azx__ati_8h.html#a51c6e489f7ae21d97e62ed14306825f9">azx_ati_disable_logs</a></div><div class="ttdeci">void azx_ati_disable_logs(void)</div><div class="ttdoc">Disables the logging of all AT commands.</div></div>
 <div class="ttc" id="astruct_azx_binary_data_html_a6ee6f28699a0d1b8569c51276144e97c"><div class="ttname"><a href="struct_azx_binary_data.html#a6ee6f28699a0d1b8569c51276144e97c">AzxBinaryData::size</a></div><div class="ttdeci">SSIZE_T size</div><div class="ttdoc">Size of the binary data stored.</div><div class="ttdef"><b>Definition:</b> azx_ati.h:51</div></div>
 <div class="ttc" id="astruct_azx_binary_data_html"><div class="ttname"><a href="struct_azx_binary_data.html">AzxBinaryData</a></div><div class="ttdoc">Binary data structure.</div><div class="ttdef"><b>Definition:</b> azx_ati.h:48</div></div>
 <div class="ttc" id="aazx__ati_8h_html_af7ac8d4e6789e14029766214ecd21bbf"><div class="ttname"><a href="azx__ati_8h.html#af7ac8d4e6789e14029766214ecd21bbf">azx_ati_sendCommandBinaryEx</a></div><div class="ttdeci">const struct AzxBinaryData * azx_ati_sendCommandBinaryEx(UINT8 instance, INT32 timeout_ms, const CHAR *cmd,...)</div><div class="ttdoc">Sends an AT command and returns its binary response.</div></div>

@@ -5,7 +5,7 @@
 #define AZX_STRING_H
 /**
  * @file azx_string.h
- * @version 1.0.2
+ * @version 1.0.3
  * @dependencies core/azx_log
  * @author Sorin Basca
  * @date 01/06/2017

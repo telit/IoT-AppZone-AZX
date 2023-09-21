@@ -1,6 +1,6 @@
 # Telit m2m shell tool
 
-`m2m.exe` tool allows to manage a Telit device programmatically, mostly through wrapped AT commands.
+`m2m.exe` (or `m2m` for Linux machines) tool allows to manage a Telit device programmatically, mostly through wrapped AT commands.
 A non comprehensive list of functionalities include:
 
 - list files in module filesystem
@@ -39,7 +39,7 @@ scl=5
 **I2C** section allows to configure sda and scl pins to be used in I2C communication
 
 
-For further details, execute the `m2m.exe` with no parameters``
+For further details, execute the `m2m` tool with no parameters
 
 
 ## Common operations
@@ -65,4 +65,4 @@ m2m.exe -D COM33 dump /mod/file.txt ./file.txt
 ```
 
 
-Note: file operations will report the progress status if a verbose option is enabled (-v or -vv)
+Note: file operations will report the progress status if `-p` flag is used

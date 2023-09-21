@@ -7,6 +7,10 @@
 #ifndef LFS2_H
 #define LFS2_H
 
+/*FabioPi for RVCT*/
+#ifndef __STDC_FORMAT_MACROS
+#define __STDC_FORMAT_MACROS
+#endif
 #include <stdint.h>
 #include <stdbool.h>
 

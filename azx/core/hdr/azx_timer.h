@@ -5,7 +5,7 @@
 #define UUID_9669089d_c8c5_4c9f_898b_37377eee8e07
 /**
  * @file azx_timer.h
- * @version 1.0.2
+ * @version 1.0.4
  * @dependencies core/azx_log core/azx_tasks core/azx_utils
  * @author Sorin Basca
  * @date 10/02/2019

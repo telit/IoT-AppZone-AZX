@@ -635,58 +635,67 @@ static M2MB_RESULT_E FtpAssociateCid( const CHAR *host, INT8 cid, struct M2MB_SO
   sin->sin_family = M2MB_SOCKET_BSD_AF_INET;
 
   lhost = azx_ftp_strdup( host );
-  pnum = (CHAR *) strchr( ( const char * )lhost,':' );
-  if( pnum == NULL )
-  {
-    pnum = ( CHAR * )AZX_FTP_DEFAULT_PNUM;
-  }
-  else
-  {
-    *pnum++ = '\0';
-  }
 
-  if( isdigit( *pnum ) )
+  if(!lhost)
   {
-    sin->sin_port = m2mb_socket_bsd_htons( atoi( pnum ) );
-  }
-  else
-  {
-    sin->sin_port = m2mb_socket_bsd_htons( AZX_FTP_DEFAULT_PORTNUM );
-  }
-
-  if( ( m2mb_socket_bsd_get_host_by_name_2_r_cid( ( const CHAR * )lhost, M2MB_SOCKET_BSD_AF_INET,
-      &he, tmpbuf, AZX_FTP_TMP_BUFSIZ, &phe, &herr, cid )  != 0 ) || ( phe == NULL ) )
-  {
-    m2mb_os_free( lhost );
     ret = M2MB_RESULT_FAIL;
-    AZX_FTP_DEBUG(AZX_FTP_DEBUG_HOOK_ERROR, "Get Host By Name %s\r\n", hstrerror( herr ) );
+    AZX_FTP_DEBUG(AZX_FTP_DEBUG_HOOK_ERROR, "azx_ftp_strdup returned null!\r\n" );
   }
-
-  if( ret == M2MB_RESULT_SUCCESS )
+  else
   {
-    memcpy( ( CHAR * )( &( sin->sin_addr ) ), phe->h_addr_list[0], phe->h_length );
-
-    AZX_FTP_DEBUG(AZX_FTP_DEBUG_HOOK_INFO, "Retrieved address: %s\r\n", ( ( INT8 * )m2mb_socket_bsd_inet_ntop( M2MB_SOCKET_BSD_AF_INET,
-        ( void * ) &( sin->sin_addr.s_addr ),
-        addr, sizeof( addr ) ) ) );
-    m2mb_os_free( lhost );
-
-    *sControl = socket(PF_INET, SOCK_STREAM, IPPROTO_TCP);
-    if (*sControl == -1)
+    pnum = (CHAR *) strchr( ( const char * )lhost,':' );
+    if( pnum == NULL )
     {
-      AZX_FTP_DEBUG(AZX_FTP_DEBUG_HOOK_ERROR,"socket\r\n");
-      return M2MB_RESULT_FAIL;
+      pnum = ( CHAR * )AZX_FTP_DEFAULT_PNUM;
+    }
+    else
+    {
+      /*Advance pnum pointer by one and put a EOS where : was*/
+      *pnum++ = '\0';
     }
 
-    if ( m2mb_socket_set_cid( *sControl, ftp_opts.cid ) != 0 )
+    if( pnum[strspn( pnum, "0123456789" )] == 0 ) //check if string is composed of base10 digits only
     {
-      AZX_FTP_DEBUG(AZX_FTP_DEBUG_HOOK_ERROR,"socket cid\r\n");
-      net_close(*sControl);
-      return M2MB_RESULT_FAIL;
+      sin->sin_port = m2mb_socket_bsd_htons( (UINT16) (atoi( pnum ) & 0xFFFF ));
     }
-    AZX_FTP_DEBUG(AZX_FTP_DEBUG_HOOK_INFO, "socket %p ok\r\n", *sControl);
+    else
+    {
+      sin->sin_port = m2mb_socket_bsd_htons( AZX_FTP_DEFAULT_PORTNUM );
+    }
+
+    if( ( m2mb_socket_bsd_get_host_by_name_2_r_cid( ( const CHAR * )lhost, M2MB_SOCKET_BSD_AF_INET,
+        &he, tmpbuf, AZX_FTP_TMP_BUFSIZ, &phe, &herr, cid )  != 0 ) || ( phe == NULL ) )
+    {
+      m2mb_os_free( lhost );
+      ret = M2MB_RESULT_FAIL;
+      AZX_FTP_DEBUG(AZX_FTP_DEBUG_HOOK_ERROR, "Get Host By Name %s\r\n", hstrerror( herr ) );
+    }
+
+    if( ret == M2MB_RESULT_SUCCESS )
+    {
+      memcpy( ( CHAR * )( &( sin->sin_addr ) ), phe->h_addr_list[0], phe->h_length );
+
+      AZX_FTP_DEBUG(AZX_FTP_DEBUG_HOOK_INFO, "Retrieved address: %s\r\n", ( ( INT8 * )m2mb_socket_bsd_inet_ntop( M2MB_SOCKET_BSD_AF_INET,
+          ( void * ) &( sin->sin_addr.s_addr ),
+          addr, sizeof( addr ) ) ) );
+      m2mb_os_free( lhost );
+
+      *sControl = socket(PF_INET, SOCK_STREAM, IPPROTO_TCP);
+      if (*sControl == -1)
+      {
+        AZX_FTP_DEBUG(AZX_FTP_DEBUG_HOOK_ERROR,"socket\r\n");
+        return M2MB_RESULT_FAIL;
+      }
+
+      if ( m2mb_socket_set_cid( *sControl, ftp_opts.cid ) != 0 )
+      {
+        AZX_FTP_DEBUG(AZX_FTP_DEBUG_HOOK_ERROR,"socket cid\r\n");
+        net_close(*sControl);
+        return M2MB_RESULT_FAIL;
+      }
+      AZX_FTP_DEBUG(AZX_FTP_DEBUG_HOOK_INFO, "socket %p ok\r\n", *sControl);
+    }
   }
-
   return ret;
 }
 
@@ -748,7 +757,7 @@ static INT32 FtpOpenPort(AZX_FTP_NET_BUF_T *nControl, AZX_FTP_NET_BUF_T **nData,
   INT32 on=1;
   AZX_FTP_NET_BUF_T *ctrl;
   CHAR *cp;
-  UINT32 v[6];
+
   CHAR buf[AZX_FTP_TMP_BUFSIZ];
 
   if (nControl->dir != AZX_FTP_CONTROL)
@@ -769,27 +778,41 @@ static INT32 FtpOpenPort(AZX_FTP_NET_BUF_T *nControl, AZX_FTP_NET_BUF_T **nData,
   l = sizeof(sin);
   if (nControl->cmode == AZX_FTP_PASSIVE)
   {
+    int port = 0;
+    char sep;
+
+    char search_template[20] = {0};
     memset(&sin, 0, l);
     sin.in.sin_family = AF_INET;
-    if (!FtpSendCmd("PASV",'2',nControl))
+
+    if (m2mb_socket_bsd_get_peer_name(nControl->handle, &sin.sa, &l) < 0)
+    {
+      AZX_FTP_DEBUG(AZX_FTP_DEBUG_HOOK_ERROR,"getpeername\r\n");
       return -1;
+    }
+    /* rfc2428 */
+    if (!FtpSendCmd("EPSV",'2',nControl))
+    {
+      return -1;
+    }
     cp = strchr(nControl->response,'(');
     if (cp == NULL)
+    {
       return -1;
+    }
     cp++;
-    sscanf(cp,"%u,%u,%u,%u,%u,%u",&v[2],&v[3],&v[4],&v[5],&v[0],&v[1]);
-#if 1
-    sin.sa.sa_data[2] = v[2];
-    sin.sa.sa_data[3] = v[3];
-    sin.sa.sa_data[4] = v[4];
-    sin.sa.sa_data[5] = v[5];
-    sin.sa.sa_data[0] = v[0];
-    sin.sa.sa_data[1] = v[1];
-#else
-    sin.in.sin_addr.s_addr =  ((unsigned char)(v[2])) + ((unsigned char)(v[3]) << 8) + ((unsigned char)(v[4]) << 16) + ((unsigned char)(v[5]) << 24);
-    sin.in.sin_port = v[0] + (v[1] * 256);
-#endif
-    AZX_FTP_DEBUG(AZX_FTP_DEBUG_HOOK_DEBUG,"ip and port (net order): %x, %x\r\n", sin.in.sin_addr.s_addr, sin.in.sin_port);
+    sep = *cp;
+    sprintf(search_template, "%c%c%c%%d%c", sep,sep,sep,sep);
+
+    if(1 != sscanf(cp, search_template, &port))
+    {
+      return -1;
+    }
+    else
+    {
+      sin.in.sin_port = m2mb_socket_bsd_htons((UINT16)(port & 0xffff));
+      AZX_FTP_DEBUG(AZX_FTP_DEBUG_HOOK_DEBUG,"port (net order): %x\r\n", sin.in.sin_port);
+    }
   }
   else
   {
@@ -930,7 +953,7 @@ static INT32 FtpAcceptConnection(AZX_FTP_NET_BUF_T *nData, AZX_FTP_NET_BUF_T *nC
   INT32 i;
   struct timeval tv;
   fd_set mask;
-  INT32 rv;
+  INT32 rv = 0;
 
   FD_ZERO(&mask);
   FD_SET(nControl->handle, &mask);
@@ -1037,7 +1060,10 @@ static INT32 FtpXferFile(AZX_FTP_FILE_INFO_T *localfile, AZX_FTP_FILE_INFO_T *re
     //FTP_DEBUG(FTP_DEBUG_HOOK_DEBUG,"local file opened.\r\n");
   }
 
-
+  if(localfile == NULL)
+  {
+    AZX_FTP_DEBUG( AZX_FTP_DEBUG_HOOK_DEBUG,"no localfile provided\r\n");
+  }
 #if defined(AZX) //STDIN unsupported on m2mb
   if (local == NULL)
   {
@@ -1059,7 +1085,7 @@ static INT32 FtpXferFile(AZX_FTP_FILE_INFO_T *localfile, AZX_FTP_FILE_INFO_T *re
 
   if (!azx_ftp_access(remfileinfo->path, typ, mode, nControl, &nData, 0))
   {
-    if (localfile->path)
+    if (localfile && localfile->path)
     {
       fclose(local);
       if ( typ == AZX_FTP_FILE_READ )
@@ -1130,7 +1156,7 @@ static INT32 FtpXferFile(AZX_FTP_FILE_INFO_T *localfile, AZX_FTP_FILE_INFO_T *re
 
   free(dbuf);
   fflush(local);
-  if (localfile->path != NULL)
+  if (localfile && localfile->path != NULL)
   {
     fclose(local);
     if(nControl->abort == 1)
@@ -1144,8 +1170,6 @@ static INT32 FtpXferFile(AZX_FTP_FILE_INFO_T *localfile, AZX_FTP_FILE_INFO_T *re
   {
     return 0;
   }
-
-
   return rv;
 }
 
@@ -1452,6 +1476,7 @@ AZX_FTP_GLOBALDEF INT32 azx_ftp_connect(const CHAR *host, AZX_FTP_NET_BUF_T **nC
     net_close(sControl);
     return 0;
   }
+
   if (connect(sControl, (struct sockaddr *)&sin, sizeof(sin)) == -1)
   {
     AZX_FTP_DEBUG(AZX_FTP_DEBUG_HOOK_ERROR,"connect\r\n");
@@ -1512,21 +1537,35 @@ AZX_FTP_GLOBALDEF INT32 azx_ftp_connect(const CHAR *host, AZX_FTP_NET_BUF_T **nC
 
 AZX_FTP_GLOBALDEF INT32 azx_ftp_setCallback(const AZX_FTP_CALLBACK_OPTIONS_T *opt, AZX_FTP_NET_BUF_T *nControl)
 {
-  nControl->idlecb = opt->cbFunc;
-  nControl->idlearg = opt->cbArg;
-  nControl->idletime.tv_sec = opt->idleTime / 1000;
-  nControl->idletime.tv_usec = (opt->idleTime % 1000) * 1000;
-  nControl->cbbytes = opt->bytesXferred;
-  return 1;
+  if(NULL != nControl)
+  {
+    nControl->idlecb = opt->cbFunc;
+    nControl->idlearg = opt->cbArg;
+    nControl->idletime.tv_sec = opt->idleTime / 1000;
+    nControl->idletime.tv_usec = (opt->idleTime % 1000) * 1000;
+    nControl->cbbytes = opt->bytesXferred;
+    return 1;
+  }
+  else
+  {
+    return 0;
+  }
 }
 AZX_FTP_GLOBALDEF INT32 azx_ftp_clearCallback(AZX_FTP_NET_BUF_T *nControl)
 {
-  nControl->idlecb = NULL;
-  nControl->idlearg = NULL;
-  nControl->idletime.tv_sec = 0;
-  nControl->idletime.tv_usec = 0;
-  nControl->cbbytes = 0;
-  return 1;
+  if(NULL != nControl)
+  {
+    nControl->idlecb = NULL;
+    nControl->idlearg = NULL;
+    nControl->idletime.tv_sec = 0;
+    nControl->idletime.tv_usec = 0;
+    nControl->cbbytes = 0;
+    return 1;
+  }
+  else
+  {
+    return 0;
+  }
 }
 /*
  * FtpOptions - change connection options
@@ -1536,34 +1575,39 @@ AZX_FTP_GLOBALDEF INT32 azx_ftp_clearCallback(AZX_FTP_NET_BUF_T *nControl)
 AZX_FTP_GLOBALDEF INT32 azx_ftp_options(INT32 opt, INT32 val, AZX_FTP_NET_BUF_T *nControl)
 {
   INT32 v,rv=0;
-  switch (opt)
+
+  if(NULL != nControl)
   {
-  case AZX_FTP_CONNMODE:
-    v = (int) val;
-    if ((v == AZX_FTP_PASSIVE) || (v == AZX_FTP_PORT))
+
+    switch (opt)
     {
-      nControl->cmode = v;
+    case AZX_FTP_CONNMODE:
+      v = (int) val;
+      if ((v == AZX_FTP_PASSIVE) || (v == AZX_FTP_PORT))
+      {
+        nControl->cmode = v;
+        rv = 1;
+      }
+      break;
+    case AZX_FTP_CALLBACK:
+      nControl->idlecb = (azx_ftp_callback) val;
       rv = 1;
+      break;
+    case AZX_FTP_IDLETIME:
+      v = (int) val;
+      rv = 1;
+      nControl->idletime.tv_sec = v / 1000;
+      nControl->idletime.tv_usec = (v % 1000) * 1000;
+      break;
+    case AZX_FTP_CALLBACKARG:
+      rv = 1;
+      nControl->idlearg = (void *) val;
+      break;
+    case AZX_FTP_CALLBACKBYTES:
+      rv = 1;
+      nControl->cbbytes = (int) val;
+      break;
     }
-    break;
-  case AZX_FTP_CALLBACK:
-    nControl->idlecb = (azx_ftp_callback) val;
-    rv = 1;
-    break;
-  case AZX_FTP_IDLETIME:
-    v = (int) val;
-    rv = 1;
-    nControl->idletime.tv_sec = v / 1000;
-    nControl->idletime.tv_usec = (v % 1000) * 1000;
-    break;
-  case AZX_FTP_CALLBACKARG:
-    rv = 1;
-    nControl->idlearg = (void *) val;
-    break;
-  case AZX_FTP_CALLBACKBYTES:
-    rv = 1;
-    nControl->cbbytes = (int) val;
-    break;
   }
   return rv;
 }
@@ -1576,6 +1620,11 @@ AZX_FTP_GLOBALDEF INT32 azx_ftp_options(INT32 opt, INT32 val, AZX_FTP_NET_BUF_T 
 AZX_FTP_GLOBALDEF INT32 azx_ftp_read(void *buf, INT32 max, AZX_FTP_NET_BUF_T *nData)
 {
   INT32 i;
+  if(NULL == nData)
+  {
+    return 0;
+  }
+  
   if (nData->dir != AZX_FTP_READ)
   {
     return 0;
@@ -1622,6 +1671,11 @@ AZX_FTP_GLOBALDEF INT32 azx_ftp_read(void *buf, INT32 max, AZX_FTP_NET_BUF_T *nD
 AZX_FTP_GLOBALDEF INT32 azx_ftp_write(const void *buf, INT32 len, AZX_FTP_NET_BUF_T *nData)
 {
   INT32 i;
+  if(NULL == nData)
+  {
+    return 0;
+  }
+
   if (nData->dir != AZX_FTP_WRITE)
   {
     return 0;
@@ -1658,6 +1712,11 @@ AZX_FTP_GLOBALDEF INT32 azx_ftp_write(const void *buf, INT32 len, AZX_FTP_NET_BU
 AZX_FTP_GLOBALDEF INT32 azx_ftp_close(AZX_FTP_NET_BUF_T *nData)
 {
   AZX_FTP_NET_BUF_T *ctrl;
+  if(NULL == nData)
+  {
+    return 0;
+  }
+
   switch (nData->dir)
   {
   case AZX_FTP_WRITE:
@@ -1678,7 +1737,11 @@ AZX_FTP_GLOBALDEF INT32 azx_ftp_close(AZX_FTP_NET_BUF_T *nData)
     net_close(nData->handle);
     ctrl = nData->ctrl;
     free(nData);
-    ctrl->data = NULL;
+
+    if(ctrl)
+    {
+      ctrl->data = NULL;
+    }
     if (ctrl && ctrl->response[0] != '4' && ctrl->response[0] != '5' && ctrl->abort != 1) //fabioPi: if the operation was aborted, do not attempt to read.
     {
       return(readresp('2', ctrl));
@@ -1706,6 +1769,11 @@ AZX_FTP_GLOBALDEF INT32 azx_ftp_site(const CHAR *cmd, AZX_FTP_NET_BUF_T *nContro
 {
   CHAR buf[AZX_FTP_TMP_BUFSIZ];
 
+  if(NULL == nControl)
+  {
+    return 0;
+  }
+
   if ((strlen(cmd) + 7) > sizeof(buf))
   {
     return 0;
@@ -1730,6 +1798,12 @@ AZX_FTP_GLOBALDEF INT32 azx_ftp_sysType(CHAR *buf, INT32 max, AZX_FTP_NET_BUF_T 
   INT32 l = max;
   CHAR *b = buf;
   CHAR *s;
+
+  if(NULL == nControl)
+  {
+    return 0;
+  }
+
   if (!FtpSendCmd("SYST",'2',nControl))
   {
     return 0;
@@ -1750,6 +1824,11 @@ AZX_FTP_GLOBALDEF INT32 azx_ftp_mkdir(const CHAR *path, AZX_FTP_NET_BUF_T *nCont
 {
   CHAR buf[AZX_FTP_TMP_BUFSIZ];
 
+  if(NULL == nControl)
+  {
+    return 0;
+  }
+
   if ((strlen(path) + 6) > sizeof(buf))
   {
     return 0;
@@ -1769,6 +1848,11 @@ AZX_FTP_GLOBALDEF INT32 azx_ftp_chdir(const CHAR *path, AZX_FTP_NET_BUF_T *nCont
 {
   CHAR buf[AZX_FTP_TMP_BUFSIZ];
 
+  if(NULL == nControl)
+  {
+    return 0;
+  }
+
   if ((strlen(path) + 6) > sizeof(buf))
   {
     return 0;
@@ -1786,6 +1870,11 @@ AZX_FTP_GLOBALDEF INT32 azx_ftp_chdir(const CHAR *path, AZX_FTP_NET_BUF_T *nCont
  */
 AZX_FTP_GLOBALDEF INT32 azx_ftp_cdUp(AZX_FTP_NET_BUF_T *nControl)
 {
+  if(NULL == nControl)
+  {
+    return 0;
+  }
+
   if (!FtpSendCmd("CDUP",'2',nControl))
     return 0;
   return 1;
@@ -1799,6 +1888,11 @@ AZX_FTP_GLOBALDEF INT32 azx_ftp_cdUp(AZX_FTP_NET_BUF_T *nControl)
 AZX_FTP_GLOBALDEF INT32 azx_ftp_rmdir(const CHAR *path, AZX_FTP_NET_BUF_T *nControl)
 {
   CHAR buf[AZX_FTP_TMP_BUFSIZ];
+
+  if(NULL == nControl)
+  {
+    return 0;
+  }
 
   if ((strlen(path) + 6) > sizeof(buf))
     return 0;
@@ -1818,6 +1912,12 @@ AZX_FTP_GLOBALDEF INT32 azx_ftp_pwd(CHAR *path, INT32 max, AZX_FTP_NET_BUF_T *nC
   INT32 l = max;
   CHAR *b = path;
   CHAR *s;
+
+  if(NULL == nControl)
+  {
+    return 0;
+  }
+
   if (!FtpSendCmd("PWD",'2',nControl))
   {
     return 0;
@@ -1848,7 +1948,7 @@ AZX_FTP_GLOBALDEF INT32 azx_ftp_nlst(AZX_FTP_XFER_T *output, const CHAR *path,
   remote_info.path = (CHAR*) path;
   remote_info.fileSize = 0;
 
-  if(!path || ! output)
+  if(!path || ! output || !nControl)
   {
     return 0;
   }
@@ -1880,7 +1980,7 @@ AZX_FTP_GLOBALDEF INT32 azx_ftp_dir(AZX_FTP_XFER_T *output, const CHAR *path, AZ
   remote_info.path = (CHAR*) path;
   remote_info.fileSize = 0;
 
-  if(!path || ! output)
+  if(!path || ! output || !nControl)
   {
     return 0;
   }
@@ -1912,6 +2012,11 @@ AZX_FTP_GLOBALDEF INT32 azx_ftp_size(const CHAR *path, UINT32 *size, CHAR mode, 
   CHAR cmd[64];
   INT32 resp,rv=1;
   UINT32 sz;
+
+  if(NULL == nControl)
+  {
+    return 0;
+  }
 
   if ((strlen(path) + 7) > sizeof(cmd))
   {
@@ -1956,6 +2061,11 @@ AZX_FTP_GLOBALDEF INT32 axz_ftp_sizeLong(const CHAR *path, azx_ftp_fsz_t *size, 
   INT32 resp,rv=1;
   azx_ftp_fsz_t sz;
 
+  if(NULL == nControl)
+  {
+    return 0;
+  }
+
   if ((strlen(path) + 7) > sizeof(cmd))
   {
     return 0;
@@ -1995,6 +2105,11 @@ AZX_FTP_GLOBALDEF INT32 azx_ftp_modDate(const CHAR *path, CHAR *dt, INT32 max, A
   CHAR buf[AZX_FTP_TMP_BUFSIZ];
   INT32 rv = 1;
 
+  if(NULL == nControl)
+  {
+    return 0;
+  }
+
   if ((strlen(path) + 7) > sizeof(buf))
   {
     return 0;
@@ -2006,7 +2121,8 @@ AZX_FTP_GLOBALDEF INT32 azx_ftp_modDate(const CHAR *path, CHAR *dt, INT32 max, A
   }
   else
   {
-    strncpy(dt, &nControl->response[4], max);
+    strncpy(dt, &nControl->response[4], max - 1);
+    dt[max - 1] = '\0';
   }
   return rv;
 }
@@ -2017,14 +2133,14 @@ AZX_FTP_GLOBALDEF INT32 azx_ftp_modDate(const CHAR *path, CHAR *dt, INT32 max, A
  * return 1 if successful, 0 otherwise
  */
 AZX_FTP_GLOBALDEF INT32 azx_ftp_get(AZX_FTP_XFER_T *output, const CHAR *path,
-    CHAR mode, AZX_FTP_NET_BUF_T *nControl)
+        CHAR mode, AZX_FTP_NET_BUF_T *nControl)
 {
   AZX_FTP_FILE_INFO_T remote_info;
   INT32 ret;
   remote_info.path = (CHAR*) path;
   remote_info.fileSize = 0;
 
-  if(!path || ! output)
+  if(!path || !output || !nControl)
   {
     return 0;
   }
@@ -2088,12 +2204,17 @@ AZX_FTP_GLOBALDEF INT32 azx_ftp_get(AZX_FTP_XFER_T *output, const CHAR *path,
  * return 1 if successful, 0 otherwise
  */
 AZX_FTP_GLOBALDEF INT32 azx_ftp_put(AZX_FTP_XFER_T *input, const CHAR *path, CHAR mode,
-    AZX_FTP_NET_BUF_T *nControl)
+        AZX_FTP_NET_BUF_T *nControl)
 {
   AZX_FTP_FILE_INFO_T remote_info;
   remote_info.path = (CHAR*) path;
   remote_info.fileSize = 0;
   INT32 ret = 0;
+
+  if(NULL == nControl)
+  {
+    return 0;
+  }
 
   do
   {
@@ -2118,7 +2239,6 @@ AZX_FTP_GLOBALDEF INT32 azx_ftp_put(AZX_FTP_XFER_T *input, const CHAR *path, CHA
     else
     {
       AZX_FTP_DEBUG(AZX_FTP_DEBUG_HOOK_ERROR,"bad xfer type\r\n" );
-      ret = 0;
       break;
     }
   }while(0);
@@ -2134,6 +2254,12 @@ AZX_FTP_GLOBALDEF INT32 azx_ftp_put(AZX_FTP_XFER_T *input, const CHAR *path, CHA
 AZX_FTP_GLOBALDEF INT32 azx_ftp_rename(const CHAR *src, const CHAR *dst, AZX_FTP_NET_BUF_T *nControl)
 {
   CHAR cmd[AZX_FTP_TMP_BUFSIZ];
+
+
+  if(NULL == nControl)
+  {
+    return 0;
+  }
 
   if (((strlen(src) + 7) > sizeof(cmd)) ||
       ((strlen(dst) + 7) > sizeof(cmd)))
@@ -2162,6 +2288,11 @@ AZX_FTP_GLOBALDEF INT32 azx_ftp_delete(const CHAR *fnm, AZX_FTP_NET_BUF_T *nCont
 {
   CHAR cmd[AZX_FTP_TMP_BUFSIZ];
 
+  if(NULL == nControl)
+  {
+    return 0;
+  }
+
   if ((strlen(fnm) + 7) > sizeof(cmd))
   {
     return 0;
@@ -2181,6 +2312,10 @@ AZX_FTP_GLOBALDEF INT32 azx_ftp_delete(const CHAR *fnm, AZX_FTP_NET_BUF_T *nCont
  */
 AZX_FTP_GLOBALDEF void azx_ftp_quit(AZX_FTP_NET_BUF_T *nControl)
 {
+  if(NULL == nControl)
+  {
+    return;
+  }
   if (nControl->dir != AZX_FTP_CONTROL)
   {
     return;
